@@ -1,9 +1,9 @@
-# locofit
+# LoCoFit
 ## THE Team -
-Kamal D. Agrahari
-Rutvik P. Gondekar    
-Chaitanya A. Haryana
-Yash M. Jadhav
+### Kamal D. Agrahari
+### Rutvik P. Gondekar    
+### Chaitanya A. Haryana
+### Yash M. Jadhav
 
 ## Features list
 User Login ( new registration)  / User Creation.
