@@ -17,7 +17,7 @@ public class MainActivity extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Hello from Toast", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Hello from Kamal !", Toast.LENGTH_SHORT).show();
                 Log.d("General", "The button is working");
             }
         });
