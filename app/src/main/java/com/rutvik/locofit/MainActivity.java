@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.rutvik.locofit.auth.LoginActivity;
+
 public class MainActivity extends Activity {
 
     @Override
@@ -21,7 +23,7 @@ public class MainActivity extends Activity {
                     Log.d("General", "Splash screen error");
                 }
                 finally {
-                    Intent intent = new Intent(MainActivity.this, BaseActivity.class);
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
             }
