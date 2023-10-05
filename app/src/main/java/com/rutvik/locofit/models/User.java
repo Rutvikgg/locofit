@@ -3,23 +3,38 @@ package com.rutvik.locofit.models;
 import java.time.LocalDate;
 
 public class User {
-    public String username;
-    public String password;
-    public String firstName;
-    public String lastName;
-    public LocalDate dateOfBirth;
-    public String gender;
-    public String email;
-    public int height;
-    public int weight;
-    public double BMI;
+    private String username;
+    private String password;
+    private String firstName;
+    private String lastName;
+    private String dateOfBirth;
+    private String gender;
+    private String email;
+    private int height;
+    private int weight;
+    private double BMI;
+
+    public User() {
+    }
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public User(String firstName, String lastName, LocalDate dateOfBirth, String gender, String email, int height, int weight) {
+    public User(String firstName, String lastName, String dateOfBirth, String gender, String email, int height, int weight) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.email = email;
+        this.height = height;
+        this.weight = weight;
+        this.BMI = calcBMI(height, weight);
+    }
+    public User(String username, String password, String firstName, String lastName, String dateOfBirth, String gender, String email, int height, int weight) {
+        this.username = username;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -62,11 +77,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public LocalDate getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

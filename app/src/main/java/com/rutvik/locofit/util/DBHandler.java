@@ -1,10 +1,14 @@
 package com.rutvik.locofit.util;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import com.rutvik.locofit.models.User;
 
 public class DBHandler extends SQLiteOpenHelper {
     // Database details
@@ -38,5 +42,65 @@ public class DBHandler extends SQLiteOpenHelper {
         String queryDropUserTable = "DROP TABLE IF EXISTS " + USER_TABLE + ";";
         database.execSQL(queryDropUserTable);
         onCreate(database);
+    }
+
+    public boolean addUser(User user){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_USERNAME, user.getUsername());
+        cv.put(COLUMN_PASSWORD, user.getPassword());
+        cv.put(COLUMN_FIRST_NAME, user.getFirstName());
+        cv.put(COLUMN_LAST_NAME, user.getLastName());
+        cv.put(COLUMN_HEIGHT, user.getHeight());
+        cv.put(COLUMN_WEIGHT, user.getWeight());
+        cv.put(COLUMN_BMI, user.getBMI());
+        cv.put(COLUMN_GENDER, user.getGender());
+        cv.put(COLUMN_DOB, user.getDateOfBirth());
+        cv.put(COLUMN_EMAIL, user.getEmail());
+        long result = db.insert(USER_TABLE, null, cv);
+        return result != -1;
+    }
+
+    public boolean deleteUser(User user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int result = db.delete(USER_TABLE, COLUMN_USERNAME + " = ?", new String[]{user.getUsername()});
+        return result > 0;
+    }
+
+    public User getUser(String givenUsername, String givenPassword){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] projection = {COLUMN_USERNAME, COLUMN_PASSWORD, COLUMN_FIRST_NAME, COLUMN_LAST_NAME, COLUMN_HEIGHT, COLUMN_WEIGHT, COLUMN_BMI, COLUMN_GENDER,COLUMN_DOB,COLUMN_EMAIL};
+        String selection = COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ?";
+        String[] selectionArgs = {givenUsername, givenPassword};
+        Cursor cursor = db.query(USER_TABLE, projection, selection, selectionArgs, null, null, null);
+        User user = null;
+        if(cursor != null && cursor.moveToFirst()){
+            String username = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USERNAME));
+            String password = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASSWORD));
+            String firstName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FIRST_NAME));
+            String lastName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LAST_NAME));
+            int height = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_HEIGHT));
+            int weight = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_WEIGHT));
+            double bmi = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_BMI));
+            String gender = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GENDER));
+            String dob = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DOB));
+            String email = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EMAIL));
+            user = new User(username, password, firstName, lastName, dob, gender, email, height, weight);
+            cursor.close();
+        }
+            return user;
+    }
+
+    public boolean containsUser(String username, String password){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] projection = { COLUMN_USERNAME, COLUMN_PASSWORD };
+        String selection = COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ?";
+        String[] selectionArgs = { username, password };
+        Cursor cursor = db.query(USER_TABLE, projection, selection, selectionArgs, null, null, null);
+        boolean userExists = (cursor != null && cursor.getCount() > 0);
+        if (cursor != null) {
+            cursor.close();
+        }
+        return userExists;
     }
 }
