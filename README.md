@@ -7,18 +7,15 @@
 
 ## Features list
 User Login ( new registration)  / User Creation.
-Admin Login / Admin Access (User Creation / Deletion , Viewing user info)
 Location Tracking & Integration with Maps (Different markers for exercises)
-Workout History 
+Workout History (new tab)
 Offline Mode
-Tracking Exercise (Walking, Running , Cycling, Jumping Jacks, )
-Sleep Tracking
-Daily Diet Plan
-Daily Goals & Personal Best
+Tracking Exercise (Walking, Running , Cycling , Hiking , Sprint , Stair climbing ,Swimming)
+Daily Diet Plan(optional)
+Daily Goals & Personal Best (Home Page)+ Recent Workout  History
 Remainder & Logging Activities (BMI, Calories Burned )
-Calendar & Weather integration for 
 Analytics & User Profile
 Take Classes/learn with experts & News
 LoadScreen with Quotes
-Settings (Aesthetic features, power saving)
-Help & info
+Settings (power saving)
+About us-
