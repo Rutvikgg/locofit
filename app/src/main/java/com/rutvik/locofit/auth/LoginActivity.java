@@ -8,13 +8,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rutvik.locofit.BaseActivity;
 import com.rutvik.locofit.R;
+import com.rutvik.locofit.util.DBHandler;
 
 public class LoginActivity extends Activity {
-    private Button signinBtn, insteadBtn;
+    private Button signinBtn;
+    private TextView signupInsteadBtn, loginShowMessageTextView;
     private EditText usernameField, passwordField;
 
     @Override
@@ -22,9 +25,10 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         signinBtn = findViewById(R.id.signinBtn);
-        insteadBtn = findViewById(R.id.insteadBtn);
+        signupInsteadBtn = findViewById(R.id.signupInsteadBtn);
         usernameField = findViewById(R.id.usernameField);
         passwordField = findViewById(R.id.passwordField);
+        loginShowMessageTextView = findViewById(R.id.loginShowMessageTextView);
         SharedPreferences sharedPreferences = getSharedPreferences("com.rutvik.locofit.SHAREDPREFERENCES", MODE_PRIVATE);
 //        SharedPreferences.Editor editor = sharedPreferences.edit();
 //        editor.clear();
@@ -34,21 +38,20 @@ public class LoginActivity extends Activity {
             public void onClick(View view) {
                 String username = usernameField.getText().toString().trim();
                 String password = passwordField.getText().toString().trim();
-                String storedUsername = sharedPreferences.getString("username", null);
-                String storedPassword = sharedPreferences.getString("password", null);
+                DBHandler dbHandler = new DBHandler(LoginActivity.this);
                 if(username.equals("") || password.equals("")){
-                    Toast.makeText(LoginActivity.this, "Both the fields are required", Toast.LENGTH_SHORT).show();
-                } else if (username.equals(storedUsername) && password.equals(storedPassword)) {
+                   loginShowMessageTextView.setText("Both fields are required!");
+                } else if (dbHandler.containsUser(username, password)) {
                     Intent intent = new Intent(LoginActivity.this, BaseActivity.class);
                     startActivity(intent);
                 }
                 else {
-                    Toast.makeText(LoginActivity.this, "This User does not exist", Toast.LENGTH_SHORT).show();
+                    loginShowMessageTextView.setText("This User does not Exists!");
                 }
             }
         });
 
-        insteadBtn.setOnClickListener(new View.OnClickListener() {
+        signupInsteadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -56,5 +59,10 @@ public class LoginActivity extends Activity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed(){
+        // Do nothing
     }
 }

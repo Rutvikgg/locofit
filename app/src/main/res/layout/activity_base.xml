@@ -10,8 +10,8 @@
 
     <TextView
         android:id="@+id/showUserField"
-        android:layout_width="200dp"
-        android:layout_height="32dp"
+        android:layout_width="276dp"
+        android:layout_height="136dp"
         android:text="TextView"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/logoutBtn"

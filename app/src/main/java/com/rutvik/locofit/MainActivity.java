@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
                     Log.d("General", "Splash screen error");
                 }
                 finally {
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(MainActivity.this, BaseActivity.class);
                     startActivity(intent);
                 }
             }
