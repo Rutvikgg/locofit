@@ -8,14 +8,14 @@ public class Exercise {
     public double speed;
     public double caloriesBurned;
     public double MET;
-    public LocalTime duration;
-    public LocalDateTime dateTime;
+    public String duration;
+    public String dateTime;
 
-    public Exercise(double distance, double speed, double caloriesBurned, double MET, LocalTime duration, LocalDateTime dateTime) {
+    public Exercise() {
+    }
+
+    public Exercise(double distance, String duration, String dateTime, int weight) {
         this.distance = distance;
-        this.speed = speed;
-        this.caloriesBurned = caloriesBurned;
-        this.MET = MET;
         this.duration = duration;
         this.dateTime = dateTime;
     }
@@ -52,19 +52,37 @@ public class Exercise {
         this.MET = MET;
     }
 
-    public LocalTime getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(LocalTime duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
-    public LocalDateTime getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public double calcSpeed(double distance, String duration) {
+        int durationHours = Integer.parseInt(duration.substring(0, 2));
+        int durationMinutes = Integer.parseInt(duration.substring(3, 5));
+        int durationSeconds = Integer.parseInt(duration.substring(6, 8));
+        return distance / ((durationHours*3600)+(durationMinutes*60)+durationSeconds);
+    }
+
+    public double calcCaloriesBurned(int weight, double distance, double MET) {
+        return weight * distance * MET;
+    }
+
+    public double calcMET(double distance, String duration) {
+        int durationHours = Integer.parseInt(duration.substring(0, 2));
+        int durationMinutes = Integer.parseInt(duration.substring(3, 5));
+        int durationSeconds = Integer.parseInt(duration.substring(6, 8));
+        return (distance * 0.001) / ((durationHours + (durationMinutes * 0.0166667) + (durationSeconds*0.000277778)) * 3.5 );
     }
 }

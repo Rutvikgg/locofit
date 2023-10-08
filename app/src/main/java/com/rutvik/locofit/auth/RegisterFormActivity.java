@@ -61,10 +61,10 @@ public class RegisterFormActivity extends Activity {
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
                                 // on below line we are setting date to our text view.
-                                formDOBFIield.setText(dayOfMonth + "/" + (month+1) + "/" + year);
+                                formDOBFIield.setText(dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
                                 dob[0] = String.valueOf(year);
-                                dob[1] = String.valueOf(monthOfYear + 1).length() == 1 ? "0"+String.valueOf(monthOfYear+1): String.valueOf(monthOfYear + 1);
-                                dob[2] = String.valueOf(dayOfMonth);
+                                dob[1] = String.valueOf(monthOfYear + 1).length() == 1 ? "0" + String.valueOf(monthOfYear+1) : String.valueOf(monthOfYear + 1);
+                                dob[2] = String.valueOf(dayOfMonth).length() == 1 ? "0" + String.valueOf(dayOfMonth) : String.valueOf(dayOfMonth);
 
                             }
                         }, year, month, day);

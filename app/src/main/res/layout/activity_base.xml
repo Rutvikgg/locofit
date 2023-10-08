@@ -12,6 +12,7 @@
         android:id="@+id/showUserField"
         android:layout_width="276dp"
         android:layout_height="136dp"
+        android:fontFamily="@font/rubik"
         android:text="TextView"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/logoutBtn"
