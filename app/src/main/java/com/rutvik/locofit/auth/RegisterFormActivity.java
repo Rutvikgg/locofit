@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.rutvik.locofit.BaseActivity;
 import com.rutvik.locofit.MainActivity;
@@ -27,6 +28,8 @@ public class RegisterFormActivity extends Activity {
     private EditText formFirstNameField, formLastNameField, formDOBFIield, formHeightField, formWeightField, formEmailField;
     private Spinner genderSpinner;
     private Button signupBtn;
+    private TextView registerFormMessageField;
+    private DBHandler dbHandler = new DBHandler(RegisterFormActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class RegisterFormActivity extends Activity {
         formEmailField = findViewById(R.id.formEmailField);
         genderSpinner = findViewById(R.id.genderSpinner);
         signupBtn = findViewById(R.id.signupBtn);
+        registerFormMessageField = findViewById(R.id.registerFormMessageField);
         String[] genders = {"Male", "Female", "Other"};
         final String[] selectedGender = {"Other"};
         String dob[] = {"0000", "00", "00"};
@@ -97,17 +101,27 @@ public class RegisterFormActivity extends Activity {
                 String email = formEmailField.getText().toString().trim();
                 String DOB = dob[0] + "-" + dob[1] + "-" + dob[2];
                 String gender = selectedGender[0];
-                User user = new User(username, password, firstName, lastName, DOB, gender, email, height, weight);
-                DBHandler dbHandler = new DBHandler(RegisterFormActivity.this);
-                dbHandler.addUser(user);
-                SharedPreferences sharedPreferences = getSharedPreferences("com.rutvik.locofit.SHAREDPREFERENCES", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("username", username);
-                editor.putString("password", password);
-                editor.commit();
-                Intent intent1 = new Intent(RegisterFormActivity.this, BaseActivity.class);
-                startActivity(intent1);
+                if(firstName.equals("") || lastName.equals("") || email.equals("") || dob.equals("") || gender.equals("") || height == 0 || weight == 0) {
+                    registerFormMessageField.setText("All fields are required!");
+                } else {
+                    User user = new User(username, password, firstName, lastName, DOB, gender, email, height, weight);
+                    dbHandler.addUser(user);
+                    SharedPreferences sharedPreferences = getSharedPreferences("com.rutvik.locofit.SHAREDPREFERENCES", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("username", username);
+                    editor.putString("password", password);
+                    editor.commit();
+                    Intent intent1 = new Intent(RegisterFormActivity.this, BaseActivity.class);
+                    startActivity(intent1);
+                }
+
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dbHandler.closeDatabase();
     }
 }

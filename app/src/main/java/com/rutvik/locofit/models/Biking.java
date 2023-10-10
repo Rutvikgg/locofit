@@ -5,6 +5,7 @@ public class Biking extends Exercise{
     public String type;
 
     public Biking() {
+        this.exerciseType = "biking";
     }
 
     public Biking(double distance, String duration, String dateTime, int weight, double elevationGain, String type) {
@@ -12,6 +13,7 @@ public class Biking extends Exercise{
         this.elevationGain = elevationGain;
         this.speed = calcSpeed(distance, duration);
         this.MET = calcMET(type, duration);
+        this.exerciseType = "biking";
     }
     public double calcMET(String type, String duration) {
         int durationHours = Integer.parseInt(duration.substring(0, 2));
@@ -22,7 +24,7 @@ public class Biking extends Exercise{
             case "General Biking":
                 MET = 7;
                 break;
-            case "Breaststroke":
+            case "Mountain Biking":
                 MET = 12;
                 break;
             default:

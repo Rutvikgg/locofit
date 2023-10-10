@@ -4,6 +4,7 @@ public class Sprint extends Exercise{
     public double acceleration;
 
     public Sprint() {
+        this.exerciseType = "sprint";
     }
 
     public Sprint(double distance, String duration, String dateTime, int weight) {
@@ -12,6 +13,7 @@ public class Sprint extends Exercise{
         this.MET = calcMET(duration);
         this.caloriesBurned = calcCaloriesBurned(weight, distance, this.MET);
         this.acceleration = calcAcceleration(this.speed, duration);
+        this.exerciseType = "sprint";
     }
 
     public double calcAcceleration(double speed, String duration) {

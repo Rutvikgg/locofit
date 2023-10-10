@@ -26,6 +26,22 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_GENDER = "gender";
     public static final String COLUMN_DOB = "date_of_birth";
     public static final String COLUMN_EMAIL = "email";
+    // Exercise table columns and names
+    public static final String EXERCISE_TABLE = "exercises";
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_TYPE = "type";
+    public static final String COLUMN_DISTANCE = "distance";
+    public static final String COLUMN_SPEED = "speed";
+    public static final String COLUMN_CALORIES_BURNED = "calories_burned";
+    public static final String COLUMN_MET = "met";
+    public static final String COLUMN_DURATION = "duration";
+    public static final String COLUMN_ON_DATE = "on_date";
+    public static final String COLUMN_ELEVATION_GAIN = "elevation_gain";
+    public static final String COLUMN_BIKING_TYPE = "biking_type";
+    public static final String COLUMN_TERRAIN = "terrain";
+    public static final String COLUMN_ACCELERATION = "acceleration";
+    public static final String COLUMN_SWIM_STYLE = "swim_style";
+    public static final String COLUMN_STEP_COUNT = "step_count";
 
     public DBHandler(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -34,7 +50,10 @@ public class DBHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database) {
         String queryCreateUserTable = "CREATE TABLE " + USER_TABLE + " (" + COLUMN_USERNAME + " TEXT PRIMARY KEY, " + COLUMN_PASSWORD + " TEXT, " + COLUMN_FIRST_NAME + " TEXT, " + COLUMN_LAST_NAME + " TEXT, " + COLUMN_HEIGHT + " INTEGER, " + COLUMN_WEIGHT + " INTEGER, " + COLUMN_BMI +  " REAL, " + COLUMN_GENDER + " TEXT, " + COLUMN_DOB + " DATE, " + COLUMN_EMAIL + " TEXT);";
+
+        String queryCreateExcerciseTable = "CREATE TABLE " + EXERCISE_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_USERNAME + " TEXT, " + COLUMN_PASSWORD + " TEXT, " + COLUMN_TYPE + " TEXT, " + COLUMN_DISTANCE + " REAL, " + COLUMN_SPEED + " REAL, " + COLUMN_CALORIES_BURNED + " REAL, " + COLUMN_MET + " REAL, " + COLUMN_DURATION + " TEXT, " + COLUMN_ON_DATE + " DATE, " + COLUMN_ELEVATION_GAIN + " REAL, " + COLUMN_BIKING_TYPE + " TEXT, " + COLUMN_TERRAIN + " TEXT, " + COLUMN_ACCELERATION + " REAL, " + COLUMN_SWIM_STYLE + " TEXT, " + COLUMN_STEP_COUNT + " INTEGER);";
         database.execSQL(queryCreateUserTable);
+        database.execSQL(queryCreateExcerciseTable);
     }
 
     @Override
@@ -44,6 +63,12 @@ public class DBHandler extends SQLiteOpenHelper {
         onCreate(database);
     }
 
+    public void closeDatabase() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        if (db != null && db.isOpen()) {
+            db.close();
+        }
+    }
     public boolean addUser(User user){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();

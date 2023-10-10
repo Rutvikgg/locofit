@@ -4,6 +4,7 @@ public class Swimming extends Exercise{
     public String style;
 
     public Swimming() {
+        this.exerciseType = "swimming";
     }
 
     public Swimming(double distance, String style, String duration, String dateTime, int weight) {
@@ -12,6 +13,7 @@ public class Swimming extends Exercise{
         this.MET = calcMET(style, duration);
         this.speed = calcSpeed(distance, duration);
         this.caloriesBurned = calcCaloriesBurned(weight, distance, this.MET);
+        this.exerciseType = "swimming";
     }
 
     public double calcMET(String style, String duration) {

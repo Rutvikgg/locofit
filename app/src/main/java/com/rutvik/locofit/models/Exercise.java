@@ -1,23 +1,23 @@
 package com.rutvik.locofit.models;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 public class Exercise {
+    public int id;
+    public String exerciseType;
     public double distance;
     public double speed;
     public double caloriesBurned;
     public double MET;
     public String duration;
-    public String dateTime;
+    public String onDate;
 
     public Exercise() {
     }
 
-    public Exercise(double distance, String duration, String dateTime, int weight) {
+    public Exercise(double distance, String duration, String onDate, int weight) {
         this.distance = distance;
         this.duration = duration;
-        this.dateTime = dateTime;
+        this.onDate = onDate;
     }
 
     public double getDistance() {
@@ -60,12 +60,28 @@ public class Exercise {
         this.duration = duration;
     }
 
-    public String getDateTime() {
-        return dateTime;
+    public String getOnDate() {
+        return onDate;
     }
 
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
+    public void setOnDate(String onDate) {
+        this.onDate = onDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getExerciseType() {
+        return exerciseType;
+    }
+
+    public void setExerciseType(String exerciseType) {
+        this.exerciseType = exerciseType;
     }
 
     public double calcSpeed(double distance, String duration) {

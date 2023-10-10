@@ -4,6 +4,7 @@ public class Walking extends Exercise{
     public int stepCount;
 
     public Walking() {
+        this.exerciseType = "walking";
     }
 
     public Walking(double distance, int stepCount, String duration, String dateTime, int weight) {
@@ -12,6 +13,7 @@ public class Walking extends Exercise{
         this.MET = calcMET(distance, duration);
         this.speed = calcSpeed(distance, duration);
         this.caloriesBurned = calcCaloriesBurned(weight, distance, this.MET);
+        this.exerciseType = "walking";
     }
 
     public int getStepCount() {

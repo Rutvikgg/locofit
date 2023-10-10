@@ -5,6 +5,7 @@ public class Hiking extends Exercise{
     public double elevationGain;
 
     public Hiking() {
+        this.exerciseType = "hiking";
     }
 
     public Hiking(double distance, String duration, String dateTime, int weight, String terrainDifficultyRating, double elevationGain) {
@@ -12,6 +13,7 @@ public class Hiking extends Exercise{
         this.elevationGain = elevationGain;
         this.terrainDifficultyRating = terrainDifficultyRating;
         this.MET = calcMET(terrainDifficultyRating, duration);
+        this.exerciseType = "hiking";
     }
 
     public double calcMET(String terrainDifficultyRating, String duration) {
