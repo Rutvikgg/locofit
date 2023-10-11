@@ -13,6 +13,7 @@ public class Hiking extends Exercise{
         this.elevationGain = elevationGain;
         this.terrainDifficultyRating = terrainDifficultyRating;
         this.MET = calcMET(terrainDifficultyRating, duration);
+        this.caloriesBurned = calcCaloriesBurned(weight, distance, this.MET);
         this.exerciseType = "hiking";
     }
 

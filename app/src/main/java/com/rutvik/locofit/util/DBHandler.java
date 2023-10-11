@@ -8,7 +8,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.rutvik.locofit.models.Biking;
+import com.rutvik.locofit.models.Hiking;
+import com.rutvik.locofit.models.Running;
+import com.rutvik.locofit.models.Sprint;
+import com.rutvik.locofit.models.Swimming;
 import com.rutvik.locofit.models.User;
+import com.rutvik.locofit.models.Walking;
 
 public class DBHandler extends SQLiteOpenHelper {
     // Database details
@@ -106,7 +112,6 @@ public class DBHandler extends SQLiteOpenHelper {
             String lastName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LAST_NAME));
             int height = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_HEIGHT));
             int weight = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_WEIGHT));
-            double bmi = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_BMI));
             String gender = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GENDER));
             String dob = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DOB));
             String email = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EMAIL));
@@ -128,4 +133,129 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         return userExists;
     }
+
+    public boolean addBiking(User user, Biking biking){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_USERNAME, user.getUsername());
+        cv.put(COLUMN_PASSWORD, user.getPassword());
+        cv.put(COLUMN_TYPE, biking.getExerciseType());
+        cv.put(COLUMN_DISTANCE, biking.getDistance());
+        cv.put(COLUMN_DURATION, biking.getDuration());
+        cv.put(COLUMN_SPEED, biking.getSpeed());
+        cv.put(COLUMN_CALORIES_BURNED, biking.getCaloriesBurned());
+        cv.put(COLUMN_MET, biking.getMET());
+        cv.put(COLUMN_ON_DATE, biking.getOnDate());
+        cv.put(COLUMN_ELEVATION_GAIN, biking.getElevationGain());
+        cv.put(COLUMN_BIKING_TYPE, biking.getType());
+        long result = db.insert(EXERCISE_TABLE, null, cv);
+        return result != -1;
+    }
+
+    public boolean addHiking(User user, Hiking hiking) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_USERNAME, user.getUsername());
+        cv.put(COLUMN_PASSWORD, user.getPassword());
+        cv.put(COLUMN_TYPE, hiking.getExerciseType());
+        cv.put(COLUMN_DISTANCE, hiking.getDistance());
+        cv.put(COLUMN_DURATION, hiking.getDuration());
+        cv.put(COLUMN_CALORIES_BURNED, hiking.getCaloriesBurned());
+        cv.put(COLUMN_MET, hiking.getMET());
+        cv.put(COLUMN_ON_DATE, hiking.getOnDate());
+        cv.put(COLUMN_ELEVATION_GAIN, hiking.getElevationGain());
+        cv.put(COLUMN_TERRAIN, hiking.getTerrainDifficultyRating());
+        long result = db.insert(EXERCISE_TABLE, null, cv);
+        return result != -1;
+    }
+
+    public boolean addRunning(User user, Running running) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_USERNAME, user.getUsername());
+        cv.put(COLUMN_PASSWORD, user.getPassword());
+        cv.put(COLUMN_TYPE, running.getExerciseType());
+        cv.put(COLUMN_DISTANCE, running.getDistance());
+        cv.put(COLUMN_DURATION, running.getDuration());
+        cv.put(COLUMN_SPEED, running.getSpeed());
+        cv.put(COLUMN_CALORIES_BURNED, running.getCaloriesBurned());
+        cv.put(COLUMN_MET, running.getMET());
+        cv.put(COLUMN_ON_DATE, running.getOnDate());
+        long result = db.insert(EXERCISE_TABLE, null, cv);
+        return result != -1;
+    }
+
+    public boolean addSprint(User user, Sprint sprint) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_USERNAME, user.getUsername());
+        cv.put(COLUMN_PASSWORD, user.getPassword());
+        cv.put(COLUMN_TYPE, sprint.getExerciseType());
+        cv.put(COLUMN_DISTANCE, sprint.getDistance());
+        cv.put(COLUMN_DURATION, sprint.getDuration());
+        cv.put(COLUMN_SPEED, sprint.getSpeed());
+        cv.put(COLUMN_CALORIES_BURNED, sprint.getCaloriesBurned());
+        cv.put(COLUMN_MET, sprint.getMET());
+        cv.put(COLUMN_ON_DATE, sprint.getOnDate());
+        cv.put(COLUMN_ACCELERATION, sprint.getAcceleration());
+        long result = db.insert(EXERCISE_TABLE, null, cv);
+        return result != -1;
+    }
+
+    public boolean addSwimming(User user, Swimming swimming) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_USERNAME, user.getUsername());
+        cv.put(COLUMN_PASSWORD, user.getPassword());
+        cv.put(COLUMN_TYPE, swimming.getExerciseType());
+        cv.put(COLUMN_DISTANCE, swimming.getDistance());
+        cv.put(COLUMN_DURATION, swimming.getDuration());
+        cv.put(COLUMN_SPEED, swimming.getSpeed());
+        cv.put(COLUMN_CALORIES_BURNED, swimming.getCaloriesBurned());
+        cv.put(COLUMN_MET, swimming.getMET());
+        cv.put(COLUMN_ON_DATE, swimming.getOnDate());
+        cv.put(COLUMN_SWIM_STYLE, swimming.getStyle());
+        long result = db.insert(EXERCISE_TABLE, null, cv);
+        return result != -1;
+    }
+
+    public boolean addWalking(User user, Walking walking) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_USERNAME, user.getUsername());
+        cv.put(COLUMN_PASSWORD, user.getPassword());
+        cv.put(COLUMN_TYPE, walking.getExerciseType());
+        cv.put(COLUMN_DISTANCE, walking.getDistance());
+        cv.put(COLUMN_DURATION, walking.getDuration());
+        cv.put(COLUMN_SPEED, walking.getSpeed());
+        cv.put(COLUMN_CALORIES_BURNED, walking.getCaloriesBurned());
+        cv.put(COLUMN_MET, walking.getMET());
+        cv.put(COLUMN_ON_DATE, walking.getOnDate());
+        cv.put(COLUMN_STEP_COUNT, walking.getStepCount());
+        long result = db.insert(EXERCISE_TABLE, null, cv);
+        return result != -1;
+    }
+
+    public Biking getBiking(User user, int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] projection = {COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED, COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_ELEVATION_GAIN, COLUMN_BIKING_TYPE};
+        String selection = COLUMN_ID + " = ? AND " + COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ? AND " + COLUMN_TYPE + " = ?";
+        String[] selectionArgs = {String.valueOf(id), user.getUsername(), user.getPassword(), "biking"};
+        Cursor cursor = db.query(EXERCISE_TABLE, projection, selection, selectionArgs, null, null, null);
+        Biking biking = new Biking();
+        if(cursor != null && cursor.moveToFirst()){
+            biking.setId(id);
+            biking.setDistance(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DISTANCE)));
+            biking.setDuration(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DURATION)));
+            biking.setSpeed(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SPEED)));
+            biking.setCaloriesBurned(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_CALORIES_BURNED)));
+            biking.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
+            biking.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
+            biking.setElevationGain(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_ELEVATION_GAIN)));
+            biking.setType(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BIKING_TYPE)));
+            cursor.close();
+        }
+        return biking;
+    }
+
 }

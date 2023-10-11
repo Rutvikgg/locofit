@@ -8,11 +8,12 @@ public class Biking extends Exercise{
         this.exerciseType = "biking";
     }
 
-    public Biking(double distance, String duration, String dateTime, int weight, double elevationGain, String type) {
-        super(distance, duration, dateTime, weight);
+    public Biking(double distance, String duration, String onDate, int weight, double elevationGain, String type) {
+        super(distance, duration, onDate, weight);
         this.elevationGain = elevationGain;
         this.speed = calcSpeed(distance, duration);
         this.MET = calcMET(type, duration);
+        this.caloriesBurned = calcCaloriesBurned(weight, distance, this.MET);
         this.exerciseType = "biking";
     }
     public double calcMET(String type, String duration) {
