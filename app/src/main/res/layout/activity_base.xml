@@ -5,18 +5,19 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color_light_azul"
+    android:background="@drawable/home_background"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/showUserField"
-        android:layout_width="276dp"
-        android:layout_height="136dp"
+        android:id="@+id/showUserFirstName"
+        android:layout_width="169dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="60dp"
         android:fontFamily="@font/rubik"
-        android:text="TextView"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/logoutBtn"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/background_color_light_azul"
+        android:textSize="22sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,10 +25,204 @@
         android:id="@+id/logoutBtn"
         android:layout_width="99dp"
         android:layout_height="53dp"
+        android:layout_marginBottom="36dp"
         android:text="Logout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profilePicView"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="50dp"
+        android:src="@drawable/logo_landscape_round_corner"
+        app:civ_border_color="@color/dark_blue"
+        app:civ_border_width="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/showGreeting"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/showGreeting"
+        android:layout_width="162dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="28dp"
+        android:text="How are you doing?"
+        android:textColor="@color/background_color_light_azul"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/showUserFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/showUserFirstName" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="155dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/activity_background"
+        android:elevation="6dp"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/showUserField" />
+        app:layout_constraintTop_toBottomOf="@+id/showGreeting">
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="Walking"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="right"
+            android:src="@drawable/logo_landscape" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="155dp"
+        android:layout_height="125dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/activity_background"
+        android:elevation="6dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="Running"
+            android:textColor="@color/background_color_light_azul"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="right"
+            android:src="@drawable/logo_landscape" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="155dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/activity_background"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="Sprinting"
+            android:textColor="@color/background_color_light_azul"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="right"
+            android:src="@drawable/logo_landscape" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="155dp"
+        android:layout_height="125dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/activity_background"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="Swimming"
+            android:textColor="@color/background_color_light_azul"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="right"
+            android:src="@drawable/logo_landscape" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="155dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/activity_background"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="Biking"
+            android:textColor="@color/background_color_light_azul"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="right"
+            android:src="@drawable/logo_landscape" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="155dp"
+        android:layout_height="125dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/activity_background"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="Hiking"
+            android:textColor="@color/background_color_light_azul"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="right"
+            android:src="@drawable/logo_landscape" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

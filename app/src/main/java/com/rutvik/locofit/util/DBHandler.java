@@ -603,4 +603,11 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.close();
         return exerciseArrayList;
     }
+
+    public void deleteAllExcercise(User user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String whereClause = COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ?";
+        String[] whereArgs = {user.getUsername(), user.getPassword()};
+        db.delete(EXERCISE_TABLE, whereClause, whereArgs);
+    }
 }
