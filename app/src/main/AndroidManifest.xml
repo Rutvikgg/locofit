@@ -21,10 +21,28 @@
         android:theme="@style/Theme.LoCoFit"
         tools:targetApi="31">
         <activity
+            android:name=".exerciseActivities.HikingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".exerciseActivities.BikingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".exerciseActivities.SwimmingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".exerciseActivities.SprintingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".exerciseActivities.RunningActivity"
+            android:exported="false" />
+        <activity
+            android:name=".exerciseActivities.WalkingActivity"
+            android:exported="false" />
+        <activity
             android:name=".auth.RegisterFormActivity"
             android:exported="false"
             android:label="Registration Form Page"
-            android:parentActivityName=".auth.RegisterActivity"/>
+            android:parentActivityName=".auth.RegisterActivity" />
         <activity
             android:name=".auth.RegisterActivity"
             android:exported="false"

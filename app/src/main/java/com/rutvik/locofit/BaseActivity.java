@@ -13,12 +13,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.rutvik.locofit.auth.LoginActivity;
+import com.rutvik.locofit.exerciseActivities.BikingActivity;
+import com.rutvik.locofit.exerciseActivities.HikingActivity;
+import com.rutvik.locofit.exerciseActivities.RunningActivity;
+import com.rutvik.locofit.exerciseActivities.SprintingActivity;
+import com.rutvik.locofit.exerciseActivities.SwimmingActivity;
+import com.rutvik.locofit.exerciseActivities.WalkingActivity;
 import com.rutvik.locofit.models.User;
 import com.rutvik.locofit.util.DBHandler;
 import com.rutvik.locofit.util.ImageUtil;
@@ -34,6 +41,7 @@ public class BaseActivity extends Activity {
     private TextView showUserFirstName;
     private Button logoutBtn;
     private CircleImageView profilePicView;
+    private LinearLayout walkingWidget, runningWidget, sprintingWidget, swimmingWidget, bikingWidget, hikingWidget;
     private User user;
     DBHandler dbHandler = new DBHandler(BaseActivity.this);
     SharedPreferences sharedPreferences;
@@ -46,6 +54,12 @@ public class BaseActivity extends Activity {
         showUserFirstName = findViewById(R.id.showUserFirstName);
         logoutBtn = findViewById(R.id.logoutBtn);
         profilePicView = findViewById(R.id.profilePicView);
+        walkingWidget = findViewById(R.id.walkingWidget);
+        runningWidget = findViewById(R.id.runningWidget);
+        sprintingWidget = findViewById(R.id.sprintingWidget);
+        swimmingWidget = findViewById(R.id.swimmingWidget);
+        bikingWidget = findViewById(R.id.bikingWidget);
+        hikingWidget = findViewById(R.id.hikingWidget);
         sharedPreferences = getSharedPreferences("com.rutvik.locofit.SHAREDPREFERENCES", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         String username = sharedPreferences.getString("username", null);
@@ -84,6 +98,66 @@ public class BaseActivity extends Activity {
             @Override
             public void onClick(View view) {
                 selectProfilePhoto(view);
+            }
+        });
+
+        walkingWidget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BaseActivity.this, WalkingActivity.class);
+                intent.putExtra("username", username);
+                intent.putExtra("password", password);
+                startActivity(intent);
+            }
+        });
+
+        runningWidget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BaseActivity.this, RunningActivity.class);
+                intent.putExtra("username", username);
+                intent.putExtra("password", password);
+                startActivity(intent);
+            }
+        });
+
+        sprintingWidget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BaseActivity.this, SprintingActivity.class);
+                intent.putExtra("username", username);
+                intent.putExtra("password", password);
+                startActivity(intent);
+            }
+        });
+
+        swimmingWidget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BaseActivity.this, SwimmingActivity.class);
+                intent.putExtra("username", username);
+                intent.putExtra("password", password);
+                startActivity(intent);
+            }
+        });
+
+        bikingWidget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BaseActivity.this, BikingActivity.class);
+                intent.putExtra("username", username);
+                intent.putExtra("password", password);
+                startActivity(intent);
+            }
+        });
+
+        hikingWidget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BaseActivity.this, HikingActivity.class);
+                intent.putExtra("username", username);
+                intent.putExtra("password", password);
+                startActivity(intent);
             }
         });
     }

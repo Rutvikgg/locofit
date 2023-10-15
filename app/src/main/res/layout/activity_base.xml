@@ -57,7 +57,7 @@
         app:layout_constraintTop_toBottomOf="@+id/showUserFirstName" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/walkingWidget"
         android:layout_width="155dp"
         android:layout_height="150dp"
         android:layout_marginStart="24dp"
@@ -87,13 +87,14 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/runningWidget"
         android:layout_width="155dp"
         android:layout_height="150dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/activity_background"
         android:elevation="6dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/walkingWidget"
         app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
@@ -115,7 +116,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/sprintingWidget"
         android:layout_width="155dp"
         android:layout_height="150dp"
         android:layout_marginStart="24dp"
@@ -123,7 +124,7 @@
         android:background="@drawable/activity_background"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/walkingWidget">
 
         <TextView
             android:id="@+id/textView14"
@@ -144,12 +145,13 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/swimmingWidget"
         android:layout_width="155dp"
         android:layout_height="150dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/activity_background"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintBottom_toBottomOf="@+id/sprintingWidget"
         app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
@@ -171,7 +173,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/bikingWidget"
         android:layout_width="155dp"
         android:layout_height="150dp"
         android:layout_marginStart="24dp"
@@ -179,7 +181,7 @@
         android:background="@drawable/activity_background"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/sprintingWidget">
 
         <TextView
             android:id="@+id/textView16"
@@ -200,12 +202,13 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/hikingWidget"
         android:layout_width="155dp"
         android:layout_height="150dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/activity_background"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
+        app:layout_constraintBottom_toBottomOf="@+id/bikingWidget"
         app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
