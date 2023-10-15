@@ -50,6 +50,8 @@ public class BaseActivity extends Activity {
         editor = sharedPreferences.edit();
         String username = sharedPreferences.getString("username", null);
         String password = sharedPreferences.getString("password", null);
+//        editor.remove("profileSrc");
+//        editor.commit();
 
         if(username == null || password == null){
             Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
@@ -102,16 +104,15 @@ public class BaseActivity extends Activity {
                 Uri selectedImageUri = data.getData();
                 Bitmap selectedImageBitmap = ImageUtil.getBitmapFromUri(BaseActivity.this, selectedImageUri);
                 profilePicView.setImageBitmap(selectedImageBitmap);
-
+                onProfilePictureChosen(selectedImageBitmap);
             }
         }
     }
     private void loadProfilePicture() {
-         sharedPreferences = getSharedPreferences("com.rutvik.locofit.SHAREDPREFERENCES", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("com.rutvik.locofit.SHAREDPREFERENCES", Context.MODE_PRIVATE);
         String imagePath = sharedPreferences.getString("profileSrc", null);
 
         if (imagePath != null) {
-            // Display the saved profile picture
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
             profilePicView.setImageBitmap(bitmap);
         } else {
@@ -136,7 +137,6 @@ public class BaseActivity extends Activity {
         }
     }
 
-    // Call this method to save the profile picture
     private void onProfilePictureChosen(Bitmap profilePictureBitmap) {
         saveProfilePicture(profilePictureBitmap);
     }

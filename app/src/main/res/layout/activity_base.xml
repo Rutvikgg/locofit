@@ -25,7 +25,7 @@
         android:id="@+id/logoutBtn"
         android:layout_width="99dp"
         android:layout_height="53dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="16dp"
         android:text="Logout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +59,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="155dp"
-        android:layout_height="125dp"
+        android:layout_height="150dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/activity_background"
@@ -88,7 +88,7 @@
 
     <LinearLayout
         android:layout_width="155dp"
-        android:layout_height="125dp"
+        android:layout_height="150dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/activity_background"
         android:elevation="6dp"
@@ -117,7 +117,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="155dp"
-        android:layout_height="125dp"
+        android:layout_height="150dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/activity_background"
@@ -145,7 +145,7 @@
 
     <LinearLayout
         android:layout_width="155dp"
-        android:layout_height="125dp"
+        android:layout_height="150dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/activity_background"
         android:orientation="vertical"
@@ -173,7 +173,7 @@
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="155dp"
-        android:layout_height="125dp"
+        android:layout_height="150dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/activity_background"
@@ -201,7 +201,7 @@
 
     <LinearLayout
         android:layout_width="155dp"
-        android:layout_height="125dp"
+        android:layout_height="150dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/activity_background"
         android:orientation="vertical"

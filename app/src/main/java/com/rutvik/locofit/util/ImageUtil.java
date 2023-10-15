@@ -28,6 +28,7 @@ public class ImageUtil {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
             BitmapFactory.decodeStream(input, null, options);
+            assert input != null;
             input.close();
 
             // Set inSampleSize
@@ -43,13 +44,13 @@ public class ImageUtil {
             if (rotation != 0) {
                 Matrix matrix = new Matrix();
                 matrix.postRotate(rotation);
+                assert bitmap != null;
                 bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
             }
 
+            assert input != null;
             input.close();
             return bitmap;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -87,30 +88,5 @@ public class ImageUtil {
         }
         cursor.close();
         return orientation;
-    }
-    public static Bitmap getCircularBitmap(Bitmap bitmap) {
-        int width = bitmap.getWidth();
-        int height = bitmap.getHeight();
-
-        // Create a circular bitmap
-        Bitmap circularBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-
-        // Create a canvas to draw on the circular bitmap
-        Canvas canvas = new Canvas(circularBitmap);
-
-        // Create a paint object
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setShader(new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
-
-        // Create a drawable with a circular shape
-        Drawable drawable = new ShapeDrawable(new OvalShape());
-        drawable.setBounds(0, 0, width, height);
-        ((ShapeDrawable) drawable).getPaint().setShader(new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
-
-        // Draw the drawable onto the circular bitmap using the circular shape
-        drawable.draw(canvas);
-
-        return circularBitmap;
     }
 }
