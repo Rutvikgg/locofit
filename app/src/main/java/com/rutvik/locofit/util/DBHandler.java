@@ -46,6 +46,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_MET = "met";
     public static final String COLUMN_DURATION = "duration";
     public static final String COLUMN_ON_DATE = "on_date";
+    public static final String COLUMN_LOCATION = "location";
     public static final String COLUMN_ELEVATION_GAIN = "elevation_gain";
     public static final String COLUMN_BIKING_TYPE = "biking_type";
     public static final String COLUMN_TERRAIN = "terrain";
@@ -61,7 +62,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase database) {
         String queryCreateUserTable = "CREATE TABLE " + USER_TABLE + " (" + COLUMN_USERNAME + " TEXT PRIMARY KEY, " + COLUMN_PASSWORD + " TEXT, " + COLUMN_FIRST_NAME + " TEXT, " + COLUMN_LAST_NAME + " TEXT, " + COLUMN_HEIGHT + " INTEGER, " + COLUMN_WEIGHT + " INTEGER, " + COLUMN_BMI +  " REAL, " + COLUMN_GENDER + " TEXT, " + COLUMN_DOB + " DATE, " + COLUMN_EMAIL + " TEXT);";
 
-        String queryCreateExcerciseTable = "CREATE TABLE " + EXERCISE_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_USERNAME + " TEXT, " + COLUMN_PASSWORD + " TEXT, " + COLUMN_TYPE + " TEXT, " + COLUMN_DISTANCE + " REAL, " + COLUMN_SPEED + " REAL, " + COLUMN_CALORIES_BURNED + " REAL, " + COLUMN_MET + " REAL, " + COLUMN_DURATION + " TEXT, " + COLUMN_ON_DATE + " DATE, " + COLUMN_ELEVATION_GAIN + " REAL, " + COLUMN_BIKING_TYPE + " TEXT, " + COLUMN_TERRAIN + " TEXT, " + COLUMN_ACCELERATION + " REAL, " + COLUMN_SWIM_STYLE + " TEXT, " + COLUMN_STEP_COUNT + " INTEGER);";
+        String queryCreateExcerciseTable = "CREATE TABLE " + EXERCISE_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_USERNAME + " TEXT, " + COLUMN_PASSWORD + " TEXT, " + COLUMN_TYPE + " TEXT, " + COLUMN_DISTANCE + " REAL, " + COLUMN_SPEED + " REAL, " + COLUMN_CALORIES_BURNED + " REAL, " + COLUMN_MET + " REAL, " + COLUMN_DURATION + " TEXT, " + COLUMN_ON_DATE + " DATE, " + COLUMN_ELEVATION_GAIN + " REAL, " + COLUMN_BIKING_TYPE + " TEXT, " + COLUMN_TERRAIN + " TEXT, " + COLUMN_ACCELERATION + " REAL, " + COLUMN_SWIM_STYLE + " TEXT, " + COLUMN_STEP_COUNT + " INTEGER, " + COLUMN_LOCATION + " TEXT);";
         database.execSQL(queryCreateUserTable);
         database.execSQL(queryCreateExcerciseTable);
     }
@@ -152,6 +153,7 @@ public class DBHandler extends SQLiteOpenHelper {
         cv.put(COLUMN_ON_DATE, biking.getOnDate());
         cv.put(COLUMN_ELEVATION_GAIN, biking.getElevationGain());
         cv.put(COLUMN_BIKING_TYPE, biking.getType());
+        cv.put(COLUMN_LOCATION, biking.getLocation());
         long result = db.insert(EXERCISE_TABLE, null, cv);
         return result != -1;
     }
@@ -169,6 +171,7 @@ public class DBHandler extends SQLiteOpenHelper {
         cv.put(COLUMN_ON_DATE, hiking.getOnDate());
         cv.put(COLUMN_ELEVATION_GAIN, hiking.getElevationGain());
         cv.put(COLUMN_TERRAIN, hiking.getTerrainDifficultyRating());
+        cv.put(COLUMN_LOCATION, hiking.getLocation());
         long result = db.insert(EXERCISE_TABLE, null, cv);
         return result != -1;
     }
@@ -185,6 +188,7 @@ public class DBHandler extends SQLiteOpenHelper {
         cv.put(COLUMN_CALORIES_BURNED, running.getCaloriesBurned());
         cv.put(COLUMN_MET, running.getMET());
         cv.put(COLUMN_ON_DATE, running.getOnDate());
+        cv.put(COLUMN_LOCATION, running.getLocation());
         long result = db.insert(EXERCISE_TABLE, null, cv);
         return result != -1;
     }
@@ -202,6 +206,7 @@ public class DBHandler extends SQLiteOpenHelper {
         cv.put(COLUMN_MET, sprint.getMET());
         cv.put(COLUMN_ON_DATE, sprint.getOnDate());
         cv.put(COLUMN_ACCELERATION, sprint.getAcceleration());
+        cv.put(COLUMN_LOCATION, sprint.getLocation());
         long result = db.insert(EXERCISE_TABLE, null, cv);
         return result != -1;
     }
@@ -219,6 +224,7 @@ public class DBHandler extends SQLiteOpenHelper {
         cv.put(COLUMN_MET, swimming.getMET());
         cv.put(COLUMN_ON_DATE, swimming.getOnDate());
         cv.put(COLUMN_SWIM_STYLE, swimming.getStyle());
+        cv.put(COLUMN_LOCATION, swimming.getLocation());
         long result = db.insert(EXERCISE_TABLE, null, cv);
         return result != -1;
     }
@@ -236,13 +242,14 @@ public class DBHandler extends SQLiteOpenHelper {
         cv.put(COLUMN_MET, walking.getMET());
         cv.put(COLUMN_ON_DATE, walking.getOnDate());
         cv.put(COLUMN_STEP_COUNT, walking.getStepCount());
+        cv.put(COLUMN_LOCATION, walking.getLocation());
         long result = db.insert(EXERCISE_TABLE, null, cv);
         return result != -1;
     }
 
     public Biking getBiking(User user, int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED, COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_ELEVATION_GAIN, COLUMN_BIKING_TYPE};
+        String[] projection = {COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED, COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_ELEVATION_GAIN, COLUMN_BIKING_TYPE, COLUMN_LOCATION};
         String selection = COLUMN_ID + " = ? AND " + COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ? AND " + COLUMN_TYPE + " = ?";
         String[] selectionArgs = {String.valueOf(id), user.getUsername(), user.getPassword(), "biking"};
         Cursor cursor = db.query(EXERCISE_TABLE, projection, selection, selectionArgs, null, null, null);
@@ -258,6 +265,7 @@ public class DBHandler extends SQLiteOpenHelper {
             biking.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
             biking.setElevationGain(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_ELEVATION_GAIN)));
             biking.setType(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BIKING_TYPE)));
+            biking.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
             cursor.close();
         }
         return biking;
@@ -265,7 +273,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public Hiking getHiking(User user, int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_ELEVATION_GAIN, COLUMN_TERRAIN};
+        String[] projection = {COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_ELEVATION_GAIN, COLUMN_TERRAIN, COLUMN_LOCATION};
         String selection = COLUMN_ID + " = ? AND " + COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ? AND " + COLUMN_TYPE + " = ?";
         String[] selectionArgs = {String.valueOf(id), user.getUsername(), user.getPassword(), "hiking"};
         Cursor cursor = db.query(EXERCISE_TABLE, projection, selection, selectionArgs, null, null, null);
@@ -280,6 +288,7 @@ public class DBHandler extends SQLiteOpenHelper {
             hiking.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
             hiking.setElevationGain(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_ELEVATION_GAIN)));
             hiking.setTerrainDifficultyRating(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TERRAIN)));
+            hiking.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
             cursor.close();
         }
         return hiking;
@@ -287,7 +296,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public Running getRunning(User user, int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED,  COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE};
+        String[] projection = {COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED,  COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_LOCATION};
         String selection = COLUMN_ID + " = ? AND " + COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ? AND " + COLUMN_TYPE + " = ?";
         String[] selectionArgs = {String.valueOf(id), user.getUsername(), user.getPassword(), "running"};
         Cursor cursor = db.query(EXERCISE_TABLE, projection, selection, selectionArgs, null, null, null);
@@ -301,6 +310,7 @@ public class DBHandler extends SQLiteOpenHelper {
             running.setCaloriesBurned(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_CALORIES_BURNED)));
             running.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
             running.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
+            running.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
             cursor.close();
         }
         return running;
@@ -308,7 +318,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public Sprint getSprint(User user, int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED,  COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_ACCELERATION};
+        String[] projection = {COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED,  COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_ACCELERATION, COLUMN_LOCATION};
         String selection = COLUMN_ID + " = ? AND " + COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ? AND " + COLUMN_TYPE + " = ?";
         String[] selectionArgs = {String.valueOf(id), user.getUsername(), user.getPassword(), "sprint"};
         Cursor cursor = db.query(EXERCISE_TABLE, projection, selection, selectionArgs, null, null, null);
@@ -323,6 +333,7 @@ public class DBHandler extends SQLiteOpenHelper {
             sprint.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
             sprint.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
             sprint.setAcceleration(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_ACCELERATION)));
+            sprint.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
             cursor.close();
         }
         return sprint;
@@ -330,7 +341,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public Swimming getSwimming(User user, int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED,  COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_SWIM_STYLE};
+        String[] projection = {COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED,  COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_SWIM_STYLE, COLUMN_LOCATION};
         String selection = COLUMN_ID + " = ? AND " + COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ? AND " + COLUMN_TYPE + " = ?";
         String[] selectionArgs = {String.valueOf(id), user.getUsername(), user.getPassword(), "swimming"};
         Cursor cursor = db.query(EXERCISE_TABLE, projection, selection, selectionArgs, null, null, null);
@@ -345,6 +356,7 @@ public class DBHandler extends SQLiteOpenHelper {
             swimming.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
             swimming.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
             swimming.setStyle(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SWIM_STYLE)));
+            swimming.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
             cursor.close();
         }
         return swimming;
@@ -352,7 +364,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public Walking getWalking(User user, int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED,  COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_STEP_COUNT};
+        String[] projection = {COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED,  COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_STEP_COUNT, COLUMN_LOCATION};
         String selection = COLUMN_ID + " = ? AND " + COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ? AND " + COLUMN_TYPE + " = ?";
         String[] selectionArgs = {String.valueOf(id), user.getUsername(), user.getPassword(), "walking"};
         Cursor cursor = db.query(EXERCISE_TABLE, projection, selection, selectionArgs, null, null, null);
@@ -367,6 +379,7 @@ public class DBHandler extends SQLiteOpenHelper {
             walking.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
             walking.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
             walking.setStepCount(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_STEP_COUNT)));
+            walking.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
             cursor.close();
         }
         return walking;
@@ -374,7 +387,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Biking> getAllBiking(User user) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMN_ID, COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED, COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_ELEVATION_GAIN, COLUMN_BIKING_TYPE};
+        String[] projection = {COLUMN_ID, COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED, COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_ELEVATION_GAIN, COLUMN_BIKING_TYPE, COLUMN_LOCATION};
         String selection = COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ? AND " + COLUMN_TYPE + " = ?";
         String[] selectionArgs = {user.getUsername(), user.getPassword(), "biking"};
         String sortOrder = COLUMN_ON_DATE + " DESC";
@@ -391,6 +404,7 @@ public class DBHandler extends SQLiteOpenHelper {
             biking.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
             biking.setElevationGain(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_ELEVATION_GAIN)));
             biking.setType(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BIKING_TYPE)));
+            biking.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
             bikingArrayList.add(biking);
         }
         cursor.close();
@@ -399,7 +413,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Hiking> getAllHiking(User user) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMN_ID, COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_ELEVATION_GAIN, COLUMN_TERRAIN};
+        String[] projection = {COLUMN_ID, COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_ELEVATION_GAIN, COLUMN_TERRAIN, COLUMN_LOCATION};
         String selection = COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ? AND " + COLUMN_TYPE + " = ?";
         String[] selectionArgs = {user.getUsername(), user.getPassword(), "hiking"};
         String sortOrder = COLUMN_ON_DATE + " DESC";
@@ -415,6 +429,7 @@ public class DBHandler extends SQLiteOpenHelper {
             hiking.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
             hiking.setElevationGain(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_ELEVATION_GAIN)));
             hiking.setTerrainDifficultyRating(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TERRAIN)));
+            hiking.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
             hikingArrayList.add(hiking);
         }
         cursor.close();
@@ -423,7 +438,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Running> getAllRunning(User user) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMN_ID, COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED,  COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE};
+        String[] projection = {COLUMN_ID, COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED,  COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_LOCATION};
         String selection = COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ? AND " + COLUMN_TYPE + " = ?";
         String[] selectionArgs = { user.getUsername(), user.getPassword(), "running"};
         String sortOrder = COLUMN_ON_DATE + " DESC";
@@ -438,6 +453,7 @@ public class DBHandler extends SQLiteOpenHelper {
             running.setCaloriesBurned(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_CALORIES_BURNED)));
             running.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
             running.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
+            running.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
             runningArrayList.add(running);
         }
         cursor.close();
@@ -446,7 +462,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Sprint> getAllSprint(User user) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMN_ID, COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED,  COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_ACCELERATION};
+        String[] projection = {COLUMN_ID, COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED,  COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_ACCELERATION, COLUMN_LOCATION};
         String selection = COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ? AND " + COLUMN_TYPE + " = ?";
         String[] selectionArgs = { user.getUsername(), user.getPassword(), "sprint"};
         String sortOrder = COLUMN_ON_DATE + " DESC";
@@ -462,6 +478,7 @@ public class DBHandler extends SQLiteOpenHelper {
             sprint.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
             sprint.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
             sprint.setAcceleration(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_ACCELERATION)));
+            sprint.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
             sprintArrayList.add(sprint);
         }
         cursor.close();
@@ -470,7 +487,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Swimming> getAllSwimming(User user) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMN_ID, COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED,  COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_SWIM_STYLE};
+        String[] projection = {COLUMN_ID, COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED,  COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_SWIM_STYLE, COLUMN_LOCATION};
         String selection = COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ? AND " + COLUMN_TYPE + " = ?";
         String[] selectionArgs = {user.getUsername(), user.getPassword(), "swimming"};
         String sortOrder = COLUMN_ON_DATE + " DESC";
@@ -486,6 +503,7 @@ public class DBHandler extends SQLiteOpenHelper {
             swimming.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
             swimming.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
             swimming.setStyle(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SWIM_STYLE)));
+            swimming.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
             swimmingArrayList.add(swimming);
         }
         cursor.close();
@@ -494,7 +512,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Walking> getAllWalking(User user) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMN_ID, COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED,  COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_STEP_COUNT};
+        String[] projection = {COLUMN_ID, COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED,  COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_STEP_COUNT, COLUMN_LOCATION};
         String selection = COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ? AND " + COLUMN_TYPE + " = ?";
         String[] selectionArgs = {user.getUsername(), user.getPassword(), "walking"};
         String sortOrder = COLUMN_ON_DATE + " DESC";
@@ -510,6 +528,7 @@ public class DBHandler extends SQLiteOpenHelper {
             walking.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
             walking.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
             walking.setStepCount(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_STEP_COUNT)));
+            walking.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
             walkingArrayList.add(walking);
         }
         cursor.close();
@@ -518,7 +537,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Exercise> getAllExercise(User user) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMN_ID, COLUMN_TYPE, COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED, COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_ELEVATION_GAIN, COLUMN_STEP_COUNT, COLUMN_SWIM_STYLE, COLUMN_ACCELERATION, COLUMN_TERRAIN, COLUMN_BIKING_TYPE};
+        String[] projection = {COLUMN_ID, COLUMN_TYPE, COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED, COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_ELEVATION_GAIN, COLUMN_STEP_COUNT, COLUMN_SWIM_STYLE, COLUMN_ACCELERATION, COLUMN_TERRAIN, COLUMN_BIKING_TYPE, COLUMN_LOCATION};
         String selection = COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ?";
         String[] selectionArgs = {user.getUsername(), user.getPassword()};
         String sortOrder = COLUMN_ON_DATE + " DESC";
@@ -537,6 +556,7 @@ public class DBHandler extends SQLiteOpenHelper {
                     biking.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
                     biking.setElevationGain(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_ELEVATION_GAIN)));
                     biking.setType(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BIKING_TYPE)));
+                    biking.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
                     exerciseArrayList.add(biking);
                     break;
                 case "hiking":
@@ -549,6 +569,7 @@ public class DBHandler extends SQLiteOpenHelper {
                     hiking.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
                     hiking.setElevationGain(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_ELEVATION_GAIN)));
                     hiking.setTerrainDifficultyRating(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TERRAIN)));
+                    hiking.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
                     exerciseArrayList.add(hiking);
                     break;
                 case "running":
@@ -560,6 +581,7 @@ public class DBHandler extends SQLiteOpenHelper {
                     running.setCaloriesBurned(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_CALORIES_BURNED)));
                     running.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
                     running.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
+                    running.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
                     exerciseArrayList.add(running);
                     break;
                 case "sprint":
@@ -572,6 +594,7 @@ public class DBHandler extends SQLiteOpenHelper {
                     sprint.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
                     sprint.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
                     sprint.setAcceleration(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_ACCELERATION)));
+                    sprint.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
                     exerciseArrayList.add(sprint);
                     break;
                 case "swimming":
@@ -584,6 +607,7 @@ public class DBHandler extends SQLiteOpenHelper {
                     swimming.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
                     swimming.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
                     swimming.setStyle(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SWIM_STYLE)));
+                    swimming.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
                     exerciseArrayList.add(swimming);
                     break;
                 case "walking":
@@ -596,6 +620,7 @@ public class DBHandler extends SQLiteOpenHelper {
                     walking.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
                     walking.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
                     walking.setStepCount(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_STEP_COUNT)));
+                    walking.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
                     exerciseArrayList.add(walking);
                     break;
             }

@@ -18,12 +18,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.rutvik.locofit.auth.LoginActivity;
 import com.rutvik.locofit.exerciseActivities.BikingActivity;
 import com.rutvik.locofit.exerciseActivities.HikingActivity;
 import com.rutvik.locofit.exerciseActivities.RunningActivity;
 import com.rutvik.locofit.exerciseActivities.SprintingActivity;
+import com.rutvik.locofit.exerciseActivities.StartExerciseActivity;
 import com.rutvik.locofit.exerciseActivities.SwimmingActivity;
 import com.rutvik.locofit.exerciseActivities.WalkingActivity;
 import com.rutvik.locofit.models.User;
@@ -104,60 +106,42 @@ public class BaseActivity extends Activity {
         walkingWidget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BaseActivity.this, WalkingActivity.class);
-                intent.putExtra("username", username);
-                intent.putExtra("password", password);
-                startActivity(intent);
+                startExerciseActivity("walking");
             }
         });
 
         runningWidget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BaseActivity.this, RunningActivity.class);
-                intent.putExtra("username", username);
-                intent.putExtra("password", password);
-                startActivity(intent);
+                startExerciseActivity("running");
             }
         });
 
         sprintingWidget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BaseActivity.this, SprintingActivity.class);
-                intent.putExtra("username", username);
-                intent.putExtra("password", password);
-                startActivity(intent);
+                startExerciseActivity("sprinting");
             }
         });
 
         swimmingWidget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BaseActivity.this, SwimmingActivity.class);
-                intent.putExtra("username", username);
-                intent.putExtra("password", password);
-                startActivity(intent);
+                startExerciseActivity("swimming");
             }
         });
 
         bikingWidget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BaseActivity.this, BikingActivity.class);
-                intent.putExtra("username", username);
-                intent.putExtra("password", password);
-                startActivity(intent);
+                startExerciseActivity("biking");
             }
         });
 
         hikingWidget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BaseActivity.this, HikingActivity.class);
-                intent.putExtra("username", username);
-                intent.putExtra("password", password);
-                startActivity(intent);
+                startExerciseActivity("hiking");
             }
         });
     }
@@ -213,6 +197,14 @@ public class BaseActivity extends Activity {
 
     private void onProfilePictureChosen(Bitmap profilePictureBitmap) {
         saveProfilePicture(profilePictureBitmap);
+    }
+
+    private void startExerciseActivity(String exercise) {
+        Intent intent = new Intent(BaseActivity.this, StartExerciseActivity.class);
+        intent.putExtra("username", user.getUsername());
+        intent.putExtra("password", user.getPassword());
+        intent.putExtra("exercise", exercise);
+        startActivity(intent);
     }
     @Override
     public void onBackPressed(){

@@ -12,6 +12,7 @@
     <color name="primary_accent_dark_color_azul">#015994</color>
     <color name="primary_accent_light_color_azul">#b3d4ea</color>
 <!--    <color name="primary_accent_light_color_azul">#cce2f1</color>-->
+    <color name="button_red">#ee1b24</color>
     <color name="background_color_azul">#99c5e3</color>
     <color name="background_color_lavander">#d2cfe6</color>
     <color name="background_color_light_azul">#e1eef7</color>

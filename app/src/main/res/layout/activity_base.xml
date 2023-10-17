@@ -76,14 +76,17 @@
             android:padding="10dp"
             android:text="Walking"
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageView5"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_gravity="right"
-            android:src="@drawable/logo_landscape" />
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:src="@drawable/walking" />
     </LinearLayout>
 
     <LinearLayout
@@ -105,14 +108,17 @@
             android:padding="10dp"
             android:text="Running"
             android:textColor="@color/background_color_light_azul"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageView6"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_gravity="right"
-            android:src="@drawable/logo_landscape" />
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:src="@drawable/running" />
     </LinearLayout>
 
     <LinearLayout
@@ -134,14 +140,17 @@
             android:padding="10dp"
             android:text="Sprinting"
             android:textColor="@color/background_color_light_azul"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageView7"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_gravity="right"
-            android:src="@drawable/logo_landscape" />
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:src="@drawable/sprint" />
     </LinearLayout>
 
     <LinearLayout
@@ -162,14 +171,17 @@
             android:padding="10dp"
             android:text="Swimming"
             android:textColor="@color/background_color_light_azul"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageView8"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_gravity="right"
-            android:src="@drawable/logo_landscape" />
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:src="@drawable/swimming" />
     </LinearLayout>
 
     <LinearLayout
@@ -191,14 +203,17 @@
             android:padding="10dp"
             android:text="Biking"
             android:textColor="@color/background_color_light_azul"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageView9"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_gravity="right"
-            android:src="@drawable/logo_landscape" />
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:src="@drawable/biking" />
     </LinearLayout>
 
     <LinearLayout
@@ -219,13 +234,16 @@
             android:padding="10dp"
             android:text="Hiking"
             android:textColor="@color/background_color_light_azul"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageView10"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_gravity="right"
-            android:src="@drawable/logo_landscape" />
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:src="@drawable/hiking" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

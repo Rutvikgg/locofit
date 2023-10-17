@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.rutvik.locofit.auth.LoginActivity;
 
 public class MainActivity extends Activity {

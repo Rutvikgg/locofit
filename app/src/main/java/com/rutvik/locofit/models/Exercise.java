@@ -10,6 +10,7 @@ public class Exercise {
     public double MET;
     public String duration;
     public String onDate;
+    public String location;
 
     public Exercise() {
     }
@@ -82,6 +83,14 @@ public class Exercise {
 
     public void setExerciseType(String exerciseType) {
         this.exerciseType = exerciseType;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public double calcSpeed(double distance, String duration) {

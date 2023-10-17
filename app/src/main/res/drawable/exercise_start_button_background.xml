@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <stroke
+        android:width="4dp"
+        android:color="@color/white" />
+    <solid android:color="@color/button_red"/> <!-- Change to your desired button color -->
+    <corners android:radius="100dp"/> <!-- This defines the radius of the circle, adjust as needed -->
+</shape>
