@@ -1,6 +1,8 @@
 package com.rutvik.locofit.models;
 
-public class Hiking extends Exercise{
+import java.io.Serializable;
+
+public class Hiking extends Exercise implements Serializable {
     public String terrainDifficultyRating;
     public double elevationGain;
 
@@ -8,12 +10,13 @@ public class Hiking extends Exercise{
         this.exerciseType = "hiking";
     }
 
-    public Hiking(double distance, String duration, String dateTime, int weight, String terrainDifficultyRating, double elevationGain) {
-        super(distance, duration, dateTime, weight);
-        this.elevationGain = elevationGain;
+    public Hiking(double distance, String duration, String onDate, int weight, String location, String onTime, String terrainDifficultyRating, double elevationGain) {
+        super(distance, duration, onDate, weight, location, onTime);
         this.terrainDifficultyRating = terrainDifficultyRating;
+        this.elevationGain = elevationGain;
         this.MET = calcMET(terrainDifficultyRating, duration);
         this.caloriesBurned = calcCaloriesBurned(weight, distance, this.MET);
+        this.speed = calcSpeed(distance, duration);
         this.exerciseType = "hiking";
     }
 
@@ -59,5 +62,23 @@ public class Hiking extends Exercise{
 
     public void setElevationGain(double elevationGain) {
         this.elevationGain = elevationGain;
+    }
+
+    @Override
+    public String toString() {
+        return "Hiking{" +
+                "terrainDifficultyRating='" + terrainDifficultyRating + '\'' +
+                ", elevationGain=" + elevationGain +
+                ", id=" + id +
+                ", exerciseType='" + exerciseType + '\'' +
+                ", distance=" + distance +
+                ", speed=" + speed +
+                ", caloriesBurned=" + caloriesBurned +
+                ", MET=" + MET +
+                ", duration='" + duration + '\'' +
+                ", onDate='" + onDate + '\'' +
+                ", onTime='" + onTime + '\'' +
+                ", location='" + location + '\'' +
+                '}';
     }
 }

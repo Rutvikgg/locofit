@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/home_background"
-    tools:context=".exerciseActivities.WalkingActivity">
+    tools:context=".exerciseActivities.StatisticsActivity">
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/statisticsExerciseLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Walking Staticstics"
+        android:text="Walking Statistics"
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginStart="24dp"
@@ -30,36 +31,53 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11">
+        app:layout_constraintTop_toBottomOf="@+id/statisticsExerciseLabel">
 
         <ImageView
-            android:id="@+id/imageView11"
+            android:id="@+id/statisticsProfilepic"
             android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:src="@drawable/logo_landscape" />
 
         <LinearLayout
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView26"
-                android:layout_width="match_parent"
+                android:id="@+id/nameView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name" />
+                android:text="Name"
+                android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/textView27"
-                android:layout_width="match_parent"
+                android:id="@+id/dateView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date" />
+                android:text="Date"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
+            android:id="@+id/exerciseImg"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:src="@drawable/logo_landscape" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tempTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/background_color_light_azul"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.5" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

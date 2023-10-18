@@ -1,10 +1,12 @@
 package com.rutvik.locofit.models;
 
-public class Running extends Exercise{
-    public Running(double distance, String duration, String dateTime, int weight) {
-        super(distance, duration, dateTime, weight);
-        this.MET = calcMET(distance, duration);
+import java.io.Serializable;
+
+public class Running extends Exercise implements Serializable {
+    public Running(double distance, String duration, String onDate, int weight, String location, String onTime) {
+        super(distance, duration, onDate, weight, location, onTime);
         this.speed = calcSpeed(distance, duration);
+        this.MET = calcMET(distance, duration);
         this.caloriesBurned = calcCaloriesBurned(weight, distance, this.MET);
         this.exerciseType = "running";
     }
@@ -12,4 +14,5 @@ public class Running extends Exercise{
     public Running() {
         this.exerciseType = "running";
     }
+
 }

@@ -18,4 +18,5 @@
     <color name="background_color_light_azul">#e1eef7</color>
     <color name="secondary_color_light_green">#a9fdac</color>
     <color name="font_color_black">#111D13</color>
+    <color name="colorPolyline">#0116A3</color>
 </resources>

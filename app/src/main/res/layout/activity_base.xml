@@ -150,7 +150,7 @@
             android:layout_gravity="center_horizontal"
             android:scaleX="1.5"
             android:scaleY="1.5"
-            android:src="@drawable/sprint" />
+            android:src="@drawable/sprinting" />
     </LinearLayout>
 
     <LinearLayout

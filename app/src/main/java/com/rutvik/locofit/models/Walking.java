@@ -1,19 +1,25 @@
 package com.rutvik.locofit.models;
 
-public class Walking extends Exercise{
+import java.io.Serializable;
+
+public class Walking extends Exercise implements Serializable {
     public int stepCount;
 
     public Walking() {
         this.exerciseType = "walking";
     }
 
-    public Walking(double distance, int stepCount, String duration, String dateTime, int weight) {
-        super(distance, duration, dateTime, weight);
-        this.stepCount = stepCount;
-        this.MET = calcMET(distance, duration);
+    public Walking(double distance, String duration, String onDate, int weight, String location, String onTime) {
+        super(distance, duration, onDate, weight, location, onTime);
+        this.stepCount = calcSteps(distance);
         this.speed = calcSpeed(distance, duration);
+        this.MET = calcMET(distance, duration);
         this.caloriesBurned = calcCaloriesBurned(weight, distance, this.MET);
         this.exerciseType = "walking";
+    }
+
+    private int calcSteps(double distance) {
+        return (int) ((distance / 10)/0.7);
     }
 
     public int getStepCount() {
@@ -22,5 +28,22 @@ public class Walking extends Exercise{
 
     public void setStepCount(int stepCount) {
         this.stepCount = stepCount;
+    }
+
+    @Override
+    public String toString() {
+        return "Walking{" +
+                "stepCount=" + stepCount +
+                ", id=" + id +
+                ", exerciseType='" + exerciseType + '\'' +
+                ", distance=" + distance +
+                ", speed=" + speed +
+                ", caloriesBurned=" + caloriesBurned +
+                ", MET=" + MET +
+                ", duration='" + duration + '\'' +
+                ", onDate='" + onDate + '\'' +
+                ", onTime='" + onTime + '\'' +
+                ", location='" + location + '\'' +
+                '}';
     }
 }

@@ -1,17 +1,18 @@
 package com.rutvik.locofit.models;
 
-public class Swimming extends Exercise{
+import java.io.Serializable;
+
+public class Swimming extends Exercise implements Serializable {
     public String style;
 
     public Swimming() {
         this.exerciseType = "swimming";
     }
 
-    public Swimming(double distance, String style, String duration, String dateTime, int weight) {
-        super(distance, duration, dateTime, weight);
+    public Swimming(double distance, String duration, String onDate, int weight, String location, String onTime, String style) {
+        super(distance, duration, onDate, weight, location, onTime);
         this.style = style;
         this.MET = calcMET(style, duration);
-        this.speed = calcSpeed(distance, duration);
         this.caloriesBurned = calcCaloriesBurned(weight, distance, this.MET);
         this.exerciseType = "swimming";
     }
@@ -45,5 +46,22 @@ public class Swimming extends Exercise{
 
     public void setStyle(String style) {
         this.style = style;
+    }
+
+    @Override
+    public String toString() {
+        return "Swimming{" +
+                "style='" + style + '\'' +
+                ", id=" + id +
+                ", exerciseType='" + exerciseType + '\'' +
+                ", distance=" + distance +
+                ", speed=" + speed +
+                ", caloriesBurned=" + caloriesBurned +
+                ", MET=" + MET +
+                ", duration='" + duration + '\'' +
+                ", onDate='" + onDate + '\'' +
+                ", onTime='" + onTime + '\'' +
+                ", location='" + location + '\'' +
+                '}';
     }
 }

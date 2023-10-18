@@ -1,7 +1,9 @@
 package com.rutvik.locofit.models;
 
 
-public class Exercise {
+import java.io.Serializable;
+
+public class Exercise implements Serializable {
     public int id;
     public String exerciseType;
     public double distance;
@@ -10,15 +12,18 @@ public class Exercise {
     public double MET;
     public String duration;
     public String onDate;
+    public String onTime;
     public String location;
 
     public Exercise() {
     }
 
-    public Exercise(double distance, String duration, String onDate, int weight) {
+    public Exercise(double distance, String duration, String onDate, int weight, String location, String onTime) {
         this.distance = distance;
         this.duration = duration;
         this.onDate = onDate;
+        this.location = location;
+        this.onTime = onTime;
     }
 
     public double getDistance() {
@@ -93,6 +98,14 @@ public class Exercise {
         this.location = location;
     }
 
+    public String getOnTime() {
+        return onTime;
+    }
+
+    public void setOnTime(String onTime) {
+        this.onTime = onTime;
+    }
+
     public double calcSpeed(double distance, String duration) {
         int durationHours = Integer.parseInt(duration.substring(0, 2));
         int durationMinutes = Integer.parseInt(duration.substring(3, 5));
@@ -109,5 +122,21 @@ public class Exercise {
         int durationMinutes = Integer.parseInt(duration.substring(3, 5));
         int durationSeconds = Integer.parseInt(duration.substring(6, 8));
         return (distance * 0.001) / ((durationHours + (durationMinutes * 0.0166667) + (durationSeconds*0.000277778)) * 3.5 );
+    }
+
+    @Override
+    public String toString() {
+        return "Exercise{" +
+                "id=" + id +
+                ", exerciseType='" + exerciseType + '\'' +
+                ", distance=" + distance +
+                ", speed=" + speed +
+                ", caloriesBurned=" + caloriesBurned +
+                ", MET=" + MET +
+                ", duration='" + duration + '\'' +
+                ", onDate='" + onDate + '\'' +
+                ", onTime='" + onTime + '\'' +
+                ", location='" + location + '\'' +
+                '}';
     }
 }

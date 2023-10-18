@@ -6,12 +6,12 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
 
     <application
         android:allowBackup="true"
@@ -30,22 +30,7 @@
             android:name=".exerciseActivities.StartExerciseActivity"
             android:exported="false" />
         <activity
-            android:name=".exerciseActivities.HikingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".exerciseActivities.BikingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".exerciseActivities.SwimmingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".exerciseActivities.SprintingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".exerciseActivities.RunningActivity"
-            android:exported="false" />
-        <activity
-            android:name=".exerciseActivities.WalkingActivity"
+            android:name=".exerciseActivities.StatisticsActivity"
             android:exported="false" />
         <activity
             android:name=".auth.RegisterFormActivity"

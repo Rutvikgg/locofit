@@ -1,19 +1,19 @@
 package com.rutvik.locofit.models;
 
-public class Sprint extends Exercise{
+public class Sprinting extends Exercise{
     public double acceleration;
 
-    public Sprint() {
-        this.exerciseType = "sprint";
+    public Sprinting() {
+        this.exerciseType = "sprinting";
     }
 
-    public Sprint(double distance, String duration, String dateTime, int weight) {
-        super(distance, duration, dateTime, weight);
+    public Sprinting(double distance, String duration, String onDate, int weight, String location, String onTime) {
+        super(distance, duration, onDate, weight, location, onTime);
         this.speed = calcSpeed(distance, duration);
         this.MET = calcMET(duration);
         this.caloriesBurned = calcCaloriesBurned(weight, distance, this.MET);
         this.acceleration = calcAcceleration(this.speed, duration);
-        this.exerciseType = "sprint";
+        this.exerciseType = "sprinting";
     }
 
     public double calcAcceleration(double speed, String duration) {
@@ -36,5 +36,22 @@ public class Sprint extends Exercise{
 
     public void setAcceleration(double acceleration) {
         this.acceleration = acceleration;
+    }
+
+    @Override
+    public String toString() {
+        return "Sprinting{" +
+                "acceleration=" + acceleration +
+                ", id=" + id +
+                ", exerciseType='" + exerciseType + '\'' +
+                ", distance=" + distance +
+                ", speed=" + speed +
+                ", caloriesBurned=" + caloriesBurned +
+                ", MET=" + MET +
+                ", duration='" + duration + '\'' +
+                ", onDate='" + onDate + '\'' +
+                ", onTime='" + onTime + '\'' +
+                ", location='" + location + '\'' +
+                '}';
     }
 }

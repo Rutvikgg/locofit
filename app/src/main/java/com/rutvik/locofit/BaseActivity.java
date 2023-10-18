@@ -9,25 +9,16 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.rutvik.locofit.auth.LoginActivity;
-import com.rutvik.locofit.exerciseActivities.BikingActivity;
-import com.rutvik.locofit.exerciseActivities.HikingActivity;
-import com.rutvik.locofit.exerciseActivities.RunningActivity;
-import com.rutvik.locofit.exerciseActivities.SprintingActivity;
 import com.rutvik.locofit.exerciseActivities.StartExerciseActivity;
-import com.rutvik.locofit.exerciseActivities.SwimmingActivity;
-import com.rutvik.locofit.exerciseActivities.WalkingActivity;
 import com.rutvik.locofit.models.User;
 import com.rutvik.locofit.util.DBHandler;
 import com.rutvik.locofit.util.ImageUtil;
@@ -64,10 +55,12 @@ public class BaseActivity extends Activity {
         hikingWidget = findViewById(R.id.hikingWidget);
         sharedPreferences = getSharedPreferences("com.rutvik.locofit.SHAREDPREFERENCES", MODE_PRIVATE);
         editor = sharedPreferences.edit();
+//        editor.clear();
+//        editor.commit();
         String username = sharedPreferences.getString("username", null);
         String password = sharedPreferences.getString("password", null);
 //        editor.remove("profileSrc");
-//        editor.commit();
+
 
         if(username == null || password == null){
             Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
