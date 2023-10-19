@@ -77,12 +77,12 @@ public class BaseActivity extends Activity {
             public void onClick(View view) {
                 editor.clear();
                 editor.commit();
-                if (dbHandler.deleteUser(user)){
-                    Toast.makeText(BaseActivity.this, "User deleted successfully", Toast.LENGTH_SHORT).show();
-                    dbHandler.deleteAllExcercise(user);
-                }else {
-                    Toast.makeText(BaseActivity.this, "User delection failed", Toast.LENGTH_SHORT).show();
-                }
+//                if (dbHandler.deleteUser(user)){
+//                    Toast.makeText(BaseActivity.this, "User deleted successfully", Toast.LENGTH_SHORT).show();
+//                    dbHandler.deleteAllExcercise(user);
+//                }else {
+//                    Toast.makeText(BaseActivity.this, "User delection failed", Toast.LENGTH_SHORT).show();
+//                }
 
                 Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
                 startActivity(intent);
@@ -161,10 +161,11 @@ public class BaseActivity extends Activity {
     }
     private void loadProfilePicture() {
         sharedPreferences = getSharedPreferences("com.rutvik.locofit.SHAREDPREFERENCES", Context.MODE_PRIVATE);
-        String imagePath = sharedPreferences.getString("profileSrc", null);
+        user.setProfilePicSrc(sharedPreferences.getString("profileSrc", null));
+//        user.setProfilePicSrc(dbHandler.getUserProfilePic(user));
 
-        if (imagePath != null) {
-            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+        if (user.getProfilePicSrc() != null) {
+            Bitmap bitmap = BitmapFactory.decodeFile(user.getProfilePicSrc());
             profilePicView.setImageBitmap(bitmap);
         } else {
             profilePicView.setImageResource(R.drawable.logo_landscape_round_corner);
@@ -179,10 +180,12 @@ public class BaseActivity extends Activity {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
             out.close();
 
-            // Save the file path in SharedPreferences
+//             Save the file path in SharedPreferences
             SharedPreferences.Editor editor = getSharedPreferences("com.rutvik.locofit.SHAREDPREFERENCES", Context.MODE_PRIVATE).edit();
             editor.putString("profileSrc", file.getAbsolutePath());
             editor.apply();
+            user.setProfilePicSrc(file.getAbsolutePath());
+
         } catch (IOException e) {
             e.printStackTrace();
         }

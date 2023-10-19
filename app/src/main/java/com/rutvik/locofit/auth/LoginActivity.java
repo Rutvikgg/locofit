@@ -32,9 +32,9 @@ public class LoginActivity extends Activity {
         passwordField = findViewById(R.id.passwordField);
         loginShowMessageTextView = findViewById(R.id.loginShowMessageTextView);
         SharedPreferences sharedPreferences = getSharedPreferences("com.rutvik.locofit.SHAREDPREFERENCES", MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.clear();
-//        editor.commit();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
         signinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,6 +44,9 @@ public class LoginActivity extends Activity {
                 if(username.equals("") || password.equals("")){
                    loginShowMessageTextView.setText("Both fields are required!");
                 } else if (dbHandler.containsUser(username, password)) {
+                    editor.putString("username", username);
+                    editor.putString("password", password);
+                    editor.commit();
                     Intent intent = new Intent(LoginActivity.this, BaseActivity.class);
                     startActivity(intent);
                 }

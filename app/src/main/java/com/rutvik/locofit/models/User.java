@@ -14,6 +14,7 @@ public class User implements Serializable {
     private int height;
     private int weight;
     private double BMI;
+    private String profilePicSrc;
 
     public User() {
     }
@@ -72,6 +73,18 @@ public class User implements Serializable {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public void setBMI(double BMI) {
+        this.BMI = BMI;
+    }
+
+    public String getProfilePicSrc() {
+        return profilePicSrc;
+    }
+
+    public void setProfilePicSrc(String profilePicSrc) {
+        this.profilePicSrc = profilePicSrc;
     }
 
     public void setLastName(String lastName) {

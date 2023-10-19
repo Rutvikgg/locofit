@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class DBHandler extends SQLiteOpenHelper {
     // Database details
     private static final String DATABASE_NAME = "locofit.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     // User table columns and names
     public static final String USER_TABLE = "users";
     public static final String COLUMN_FIRST_NAME = "first_name";
@@ -35,6 +35,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_GENDER = "gender";
     public static final String COLUMN_DOB = "date_of_birth";
     public static final String COLUMN_EMAIL = "email";
+    public static final String COLUMN_PROFILE_PIC = "profile_pic_src";
     // Exercise table columns and names
     public static final String EXERCISE_TABLE = "exercises";
     public static final String COLUMN_ID = "id";
@@ -60,7 +61,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        String queryCreateUserTable = "CREATE TABLE " + USER_TABLE + " (" + COLUMN_USERNAME + " TEXT PRIMARY KEY, " + COLUMN_PASSWORD + " TEXT, " + COLUMN_FIRST_NAME + " TEXT, " + COLUMN_LAST_NAME + " TEXT, " + COLUMN_HEIGHT + " INTEGER, " + COLUMN_WEIGHT + " INTEGER, " + COLUMN_BMI +  " REAL, " + COLUMN_GENDER + " TEXT, " + COLUMN_DOB + " DATE, " + COLUMN_EMAIL + " TEXT);";
+        String queryCreateUserTable = "CREATE TABLE " + USER_TABLE + " (" + COLUMN_USERNAME + " TEXT PRIMARY KEY, " + COLUMN_PASSWORD + " TEXT, " + COLUMN_FIRST_NAME + " TEXT, " + COLUMN_LAST_NAME + " TEXT, " + COLUMN_HEIGHT + " INTEGER, " + COLUMN_WEIGHT + " INTEGER, " + COLUMN_BMI +  " REAL, " + COLUMN_GENDER + " TEXT, " + COLUMN_DOB + " DATE, " + COLUMN_EMAIL + " TEXT, " + COLUMN_PROFILE_PIC +" TEXT);";
 
         String queryCreateExcerciseTable = "CREATE TABLE " + EXERCISE_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_USERNAME + " TEXT, " + COLUMN_PASSWORD + " TEXT, " + COLUMN_TYPE + " TEXT, " + COLUMN_DISTANCE + " REAL, " + COLUMN_SPEED + " REAL, " + COLUMN_CALORIES_BURNED + " REAL, " + COLUMN_MET + " REAL, " + COLUMN_DURATION + " TEXT, " + COLUMN_ON_DATE + " TEXT, " + COLUMN_ELEVATION_GAIN + " REAL, " + COLUMN_BIKING_TYPE + " TEXT, " + COLUMN_TERRAIN + " TEXT, " + COLUMN_ACCELERATION + " REAL, " + COLUMN_SWIM_STYLE + " TEXT, " + COLUMN_STEP_COUNT + " INTEGER, " + COLUMN_LOCATION + " TEXT, " + COLUMN_ON_TIME + " TEXT);";
         database.execSQL(queryCreateUserTable);
@@ -140,6 +141,26 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         return userExists;
     }
+//    public void addOrUpdateSrc(User user) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues cv = new ContentValues();
+//        cv.put(COLUMN_PROFILE_PIC, user.getProfilePicSrc());
+//        long rowId = db.insertWithOnConflict(USER_TABLE, null, cv, SQLiteDatabase.CONFLICT_REPLACE);
+//    }
+//
+//    public String getUserProfilePic(User user) {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        String[] projection = {COLUMN_PROFILE_PIC};
+//        String selection = COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ?";
+//        String[] selectionArgs = {user.getUsername(), user.getPassword()};
+//        Cursor cursor = db.query(USER_TABLE, projection, selection, selectionArgs, null, null, null);
+//        String profilePicSrc = null;
+//        if (cursor != null && cursor.moveToFirst()) {
+//            profilePicSrc = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PROFILE_PIC));
+//            cursor.close();
+//        }
+//        return profilePicSrc;
+//    }
 
     public boolean addBiking(User user, Biking biking){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -302,72 +323,59 @@ public class DBHandler extends SQLiteOpenHelper {
         return hiking;
     }
 
-    public Running getRunning(User user, int id) {
+    public Running getRunning(User user, String date, String time) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] projection = {COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED,  COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_LOCATION, COLUMN_ON_TIME};
-        String selection = COLUMN_ID + " = ? AND " + COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ? AND " + COLUMN_TYPE + " = ?";
-        String[] selectionArgs = {String.valueOf(id), user.getUsername(), user.getPassword(), "running"};
+        String selection = COLUMN_ON_DATE + " = ? AND " + COLUMN_ON_TIME + " = ?";
+        String[] selectionArgs = {date, time};
         Cursor cursor = db.query(EXERCISE_TABLE, projection, selection, selectionArgs, null, null, null);
         Running running = null;
         if(cursor != null && cursor.moveToFirst()) {
-            running = new Running();
-            running.setId(id);
-            running.setDistance(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DISTANCE)));
-            running.setDuration(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DURATION)));
-            running.setSpeed(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SPEED)));
-            running.setCaloriesBurned(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_CALORIES_BURNED)));
-            running.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
-            running.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
-            running.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
-            running.setOnTime(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_TIME)));
+            double distance =  cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DISTANCE));
+            String duration = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DURATION));
+            String ondate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE));
+            String location = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION));
+            String ontime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_TIME));
+            running = new Running(distance, duration, ondate, user.getWeight(), location, ontime);
             cursor.close();
         }
         return running;
     }
 
-    public Sprinting getSprinting(User user, int id) {
+    public Sprinting getSprinting(User user, String date, String time) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] projection = {COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED,  COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_ACCELERATION, COLUMN_LOCATION, COLUMN_ON_TIME};
-        String selection = COLUMN_ID + " = ? AND " + COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ? AND " + COLUMN_TYPE + " = ?";
-        String[] selectionArgs = {String.valueOf(id), user.getUsername(), user.getPassword(), "sprinting"};
+        String selection = COLUMN_ON_DATE + " = ? AND " + COLUMN_ON_TIME + " = ?";
+        String[] selectionArgs = {date, time};
         Cursor cursor = db.query(EXERCISE_TABLE, projection, selection, selectionArgs, null, null, null);
         Sprinting sprinting = null;
         if(cursor != null && cursor.moveToFirst()) {
-            sprinting = new Sprinting();
-            sprinting.setId(id);
-            sprinting.setDistance(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DISTANCE)));
-            sprinting.setDuration(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DURATION)));
-            sprinting.setSpeed(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SPEED)));
-            sprinting.setCaloriesBurned(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_CALORIES_BURNED)));
-            sprinting.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
-            sprinting.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
-            sprinting.setAcceleration(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_ACCELERATION)));
-            sprinting.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
-            sprinting.setOnTime(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_TIME)));
+            double distance =  cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DISTANCE));
+            String duration = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DURATION));
+            String ondate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE));
+            String location = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION));
+            String ontime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_TIME));
+            sprinting = new Sprinting(distance, duration, ondate, user.getWeight(), location, ontime);
             cursor.close();
         }
         return sprinting;
     }
 
-    public Swimming getSwimming(User user, int id) {
+    public Swimming getSwimming(User user,String date, String time) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] projection = {COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED,  COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_SWIM_STYLE, COLUMN_LOCATION, COLUMN_ON_TIME};
-        String selection = COLUMN_ID + " = ? AND " + COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ? AND " + COLUMN_TYPE + " = ?";
-        String[] selectionArgs = {String.valueOf(id), user.getUsername(), user.getPassword(), "swimming"};
+        String selection = COLUMN_ON_DATE + " = ? AND " + COLUMN_ON_TIME + " = ?";
+        String[] selectionArgs = {date, time};
         Cursor cursor = db.query(EXERCISE_TABLE, projection, selection, selectionArgs, null, null, null);
         Swimming swimming = null;
         if(cursor != null && cursor.moveToFirst()) {
-            swimming = new Swimming();
-            swimming.setId(id);
-            swimming.setDistance(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DISTANCE)));
-            swimming.setDuration(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DURATION)));
-            swimming.setSpeed(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SPEED)));
-            swimming.setCaloriesBurned(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_CALORIES_BURNED)));
-            swimming.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
-            swimming.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
-            swimming.setStyle(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SWIM_STYLE)));
-            swimming.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
-            swimming.setOnTime(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_TIME)));
+            double distance =  cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DISTANCE));
+            String duration = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DURATION));
+            String ondate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE));
+            String location = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION));
+            String ontime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_TIME));
+            String style = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SWIM_STYLE));
+            swimming = new Swimming(distance, duration, ondate, user.getWeight(), location, ontime, style);
             cursor.close();
         }
         return swimming;
@@ -559,87 +567,62 @@ public class DBHandler extends SQLiteOpenHelper {
         while (cursor.moveToNext()) {
             switch (cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TYPE))) {
                 case "biking":
-                    Biking biking = new Biking();
-                    biking.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)));
-                    biking.setDistance(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DISTANCE)));
-                    biking.setDuration(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DURATION)));
-                    biking.setSpeed(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SPEED)));
-                    biking.setCaloriesBurned(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_CALORIES_BURNED)));
-                    biking.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
-                    biking.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
-                    biking.setElevationGain(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_ELEVATION_GAIN)));
-                    biking.setType(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BIKING_TYPE)));
-                    biking.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
-                    biking.setOnTime(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_TIME)));
+                    double bdistance = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DISTANCE));
+                    String bduration = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DURATION));
+                    String bondate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE));
+                    String bontime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_TIME));
+                    String blocation = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION));
+                    double belevationGain = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_ELEVATION_GAIN));
+                    String btype = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BIKING_TYPE));
+                    Biking biking = new Biking(bdistance, bduration, bondate, user.getWeight(), blocation, bontime, belevationGain, btype);
                     exerciseArrayList.add(biking);
                     break;
                 case "hiking":
-                    Hiking hiking = new Hiking();
-                    hiking.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)));
-                    hiking.setDistance(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DISTANCE)));
-                    hiking.setDuration(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DURATION)));
-                    hiking.setCaloriesBurned(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_CALORIES_BURNED)));
-                    hiking.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
-                    hiking.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
-                    hiking.setElevationGain(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_ELEVATION_GAIN)));
-                    hiking.setTerrainDifficultyRating(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TERRAIN)));
-                    hiking.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
-                    hiking.setOnTime(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_TIME)));
+                    double hdistance =  cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DISTANCE));
+                    String hduration = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DURATION));
+                    String hondate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE));
+                    double helevationGain = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_ELEVATION_GAIN));
+                    String hterrain = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TERRAIN));
+                    String hlocation = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION));
+                    String hontime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_TIME));
+                    Hiking hiking = new Hiking(hdistance, hduration, hondate, user.getWeight(), hlocation, hontime, hterrain, helevationGain);
                     exerciseArrayList.add(hiking);
                     break;
                 case "running":
-                    Running running = new Running();
-                    running.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)));
-                    running.setDistance(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DISTANCE)));
-                    running.setDuration(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DURATION)));
-                    running.setSpeed(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SPEED)));
-                    running.setCaloriesBurned(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_CALORIES_BURNED)));
-                    running.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
-                    running.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
-                    running.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
-                    running.setOnTime(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_TIME)));
+                    double rdistance =  cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DISTANCE));
+                    String rduration = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DURATION));
+                    String rondate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE));
+                    String rlocation = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION));
+                    String rontime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_TIME));
+                    Running running = new Running(rdistance, rduration, rondate, user.getWeight(), rlocation, rontime);
                     exerciseArrayList.add(running);
                     break;
                 case "sprinting":
-                    Sprinting sprinting = new Sprinting();
-                    sprinting.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)));
-                    sprinting.setDistance(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DISTANCE)));
-                    sprinting.setDuration(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DURATION)));
-                    sprinting.setSpeed(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SPEED)));
-                    sprinting.setCaloriesBurned(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_CALORIES_BURNED)));
-                    sprinting.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
-                    sprinting.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
-                    sprinting.setAcceleration(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_ACCELERATION)));
-                    sprinting.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
-                    sprinting.setOnTime(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_TIME)));
+                    double spdistance =  cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DISTANCE));
+                    String spduration = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DURATION));
+                    String spondate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE));
+                    String splocation = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION));
+                    String spontime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_TIME));
+                    Sprinting sprinting = new Sprinting(spdistance, spduration, spondate, user.getWeight(), splocation, spontime);
                     exerciseArrayList.add(sprinting);
                     break;
                 case "swimming":
-                    Swimming swimming = new Swimming();
-                    swimming.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)));
-                    swimming.setDistance(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DISTANCE)));
-                    swimming.setDuration(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DURATION)));
-                    swimming.setSpeed(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SPEED)));
-                    swimming.setCaloriesBurned(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_CALORIES_BURNED)));
-                    swimming.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
-                    swimming.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
-                    swimming.setStyle(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SWIM_STYLE)));
-                    swimming.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
-                    swimming.setOnTime(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_TIME)));
+                    double sdistance =  cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DISTANCE));
+                    String sduration = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DURATION));
+                    String sondate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE));
+                    String slocation = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION));
+                    String sontime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_TIME));
+                    String sstyle = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SWIM_STYLE));
+                    Swimming swimming = new Swimming(sdistance, sduration, sondate, user.getWeight(), slocation, sontime, sstyle);
                     exerciseArrayList.add(swimming);
                     break;
                 case "walking":
-                    Walking walking = new Walking();
-                    walking.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)));
-                    walking.setDistance(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DISTANCE)));
-                    walking.setDuration(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DURATION)));
-                    walking.setSpeed(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SPEED)));
-                    walking.setCaloriesBurned(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_CALORIES_BURNED)));
-                    walking.setMET(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_MET)));
-                    walking.setOnDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE)));
-                    walking.setStepCount(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_STEP_COUNT)));
-                    walking.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)));
-                    walking.setOnTime(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_TIME)));
+                    double wdistance = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DISTANCE));
+                    String wduration = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DURATION));
+                    String wondate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_DATE));
+                    String wontime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ON_TIME));
+                    String wlocation = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION));
+                    Walking walking = new Walking(wdistance, wduration, wondate, user.getWeight(), wlocation, wontime);
                     exerciseArrayList.add(walking);
                     break;
             }
@@ -651,7 +634,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public Exercise getExercise(String type, String date, String time) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] projection = {COLUMN_ID, COLUMN_TYPE, COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED, COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_ELEVATION_GAIN, COLUMN_STEP_COUNT, COLUMN_SWIM_STYLE, COLUMN_ACCELERATION, COLUMN_TERRAIN, COLUMN_BIKING_TYPE, COLUMN_LOCATION,COLUMN_ON_TIME};
-        String selection = COLUMN_TYPE + " = ? AND " + COLUMN_ON_DATE + " = ? AND " + COLUMN_ON_TIME + " = ?";
+        String selection = COLUMN_ON_DATE + " = ? AND " + COLUMN_ON_TIME + " = ?";
         String[] selectionArgs = {type, date, time};
         Cursor cursor = db.query(EXERCISE_TABLE, projection, selection, selectionArgs, null, null, null);
         Exercise exercise = null;
@@ -738,6 +721,7 @@ public class DBHandler extends SQLiteOpenHelper {
                     break;
             }
         }
+        assert cursor != null;
         cursor.close();
         return exercise;
     }

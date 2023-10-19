@@ -8,6 +8,17 @@
     tools:context=".exerciseActivities.StatisticsActivity">
 
     <TextView
+        android:id="@+id/attribute4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="125dp"
+        android:text="TextView"
+        android:textColor="@color/background_color_light_azul"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/attribute3"
+        app:layout_constraintStart_toEndOf="@+id/attribute3" />
+
+    <TextView
         android:id="@+id/statisticsExerciseLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,64 +31,165 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/field_background"
-        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/statisticsExerciseLabel">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/statisticsProfilepic"
-            android:layout_width="90dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/logo_landscape" />
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:src="@drawable/logo_landscape_round_corner"
+            app:civ_border_color="@color/dark_blue"
+            app:civ_border_width="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/nameView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="Name"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/statisticsProfilepic"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/nameView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Name"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/dateView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date"
-                android:textSize="20sp" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/dateView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Date"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/nameView"
+            app:layout_constraintTop_toBottomOf="@+id/nameView" />
 
         <ImageView
             android:id="@+id/exerciseImg"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/logo_landscape" />
-    </LinearLayout>
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/logo_landscape"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/tempTextView"
+        android:id="@+id/attributeLabel1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="100dp"
         android:text="TextView"
         android:textColor="@color/background_color_light_azul"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
+    <TextView
+        android:id="@+id/attributeLabel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="125dp"
+        android:text="TextView"
+        android:textColor="@color/background_color_light_azul"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/attributeLabel1"
+        app:layout_constraintStart_toEndOf="@+id/attributeLabel1" />
+
+    <TextView
+        android:id="@+id/attribute1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="TextView"
+        android:textColor="@color/background_color_light_azul"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/attributeLabel1"
+        app:layout_constraintTop_toBottomOf="@+id/attributeLabel1" />
+
+    <TextView
+        android:id="@+id/attribute2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="125dp"
+        android:text="TextView"
+        android:textColor="@color/background_color_light_azul"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/attribute1"
+        app:layout_constraintStart_toEndOf="@+id/attribute1" />
+
+    <TextView
+        android:id="@+id/attributeLabel3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="TextView"
+        android:textColor="@color/background_color_light_azul"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/attribute1"
+        app:layout_constraintTop_toBottomOf="@+id/attribute1" />
+
+    <TextView
+        android:id="@+id/attributeLabel4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="125dp"
+        android:text="TextView"
+        android:textColor="@color/background_color_light_azul"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/attributeLabel3"
+        app:layout_constraintStart_toEndOf="@+id/attributeLabel3" />
+
+    <TextView
+        android:id="@+id/attribute3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="TextView"
+        android:textColor="@color/background_color_light_azul"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/attributeLabel3"
+        app:layout_constraintTop_toBottomOf="@+id/attributeLabel3" />
+
+    <TextView
+        android:id="@+id/attributeLabel5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="TextView"
+        android:textColor="@color/background_color_light_azul"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/attribute3"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/attribute5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="TextView"
+        android:textColor="@color/background_color_light_azul"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/attributeLabel5"
+        app:layout_constraintTop_toBottomOf="@+id/attributeLabel5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
