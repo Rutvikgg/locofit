@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class BaseActivity extends Activity {
     private static final int REQUEST_IMAGE_PICK = 1;
     private TextView showUserFirstName;
-    private Button logoutBtn;
+    private ImageView logoutBtn, historyBtn;
     private CircleImageView profilePicView;
     private LinearLayout walkingWidget, runningWidget, sprintingWidget, swimmingWidget, bikingWidget, hikingWidget;
     private User user;
@@ -46,6 +47,7 @@ public class BaseActivity extends Activity {
         setContentView(R.layout.activity_base);
         showUserFirstName = findViewById(R.id.showUserFirstName);
         logoutBtn = findViewById(R.id.logoutBtn);
+        historyBtn = findViewById(R.id.historyBtn);
         profilePicView = findViewById(R.id.profilePicView);
         walkingWidget = findViewById(R.id.walkingWidget);
         runningWidget = findViewById(R.id.runningWidget);
@@ -85,6 +87,16 @@ public class BaseActivity extends Activity {
 //                }
 
                 Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        historyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BaseActivity.this, HistoryActivity.class);
+                intent.putExtra("username", username);
+                intent.putExtra("password", password);
                 startActivity(intent);
             }
         });

@@ -561,7 +561,7 @@ public class DBHandler extends SQLiteOpenHelper {
         String[] projection = {COLUMN_ID, COLUMN_TYPE, COLUMN_DISTANCE, COLUMN_DURATION, COLUMN_SPEED, COLUMN_CALORIES_BURNED, COLUMN_MET, COLUMN_ON_DATE, COLUMN_ELEVATION_GAIN, COLUMN_STEP_COUNT, COLUMN_SWIM_STYLE, COLUMN_ACCELERATION, COLUMN_TERRAIN, COLUMN_BIKING_TYPE, COLUMN_LOCATION,COLUMN_ON_TIME};
         String selection = COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ?";
         String[] selectionArgs = {user.getUsername(), user.getPassword()};
-        String sortOrder = COLUMN_ON_DATE + " DESC";
+        String sortOrder = COLUMN_ON_DATE + " DESC, " + COLUMN_ON_TIME + " DESC";
         Cursor cursor = db.query(EXERCISE_TABLE, projection, selection, selectionArgs, null, null, sortOrder);
         ArrayList<Exercise> exerciseArrayList = new ArrayList<Exercise>();
         while (cursor.moveToNext()) {

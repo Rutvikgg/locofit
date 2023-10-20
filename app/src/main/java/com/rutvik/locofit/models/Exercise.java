@@ -1,9 +1,12 @@
 package com.rutvik.locofit.models;
 
 
+import com.rutvik.locofit.R;
+
 import java.io.Serializable;
 
 public class Exercise implements Serializable {
+    public int imgResource = R.drawable.logo_landscape;
     public int id;
     public String exerciseType;
     public double distance;
@@ -104,6 +107,10 @@ public class Exercise implements Serializable {
 
     public void setOnTime(String onTime) {
         this.onTime = onTime;
+    }
+
+    public int getImgResource() {
+        return imgResource;
     }
 
     public double calcSpeed(double distance, String duration) {

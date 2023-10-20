@@ -8,15 +8,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.rutvik.locofit.BaseActivity;
-import com.rutvik.locofit.MainActivity;
 import com.rutvik.locofit.R;
 import com.rutvik.locofit.models.Biking;
-import com.rutvik.locofit.models.Exercise;
 import com.rutvik.locofit.models.Hiking;
 import com.rutvik.locofit.models.Running;
 import com.rutvik.locofit.models.Sprinting;
@@ -25,15 +22,13 @@ import com.rutvik.locofit.models.User;
 import com.rutvik.locofit.models.Walking;
 import com.rutvik.locofit.util.DBHandler;
 
-import org.w3c.dom.Text;
-
 import java.text.ParseException;
 import java.util.Date;
 
 public class StatisticsActivity extends Activity {
     private TextView statisticsExerciseLabel, nameView, dateView;
-    private TextView attributeLabel1, attributeLabel2, attributeLabel3,attributeLabel4,attributeLabel5;
-    private TextView attribute1, attribute2, attribute3,attribute4,attribute5;
+    private TextView attributeLabel1, attributeLabel2, attributeLabel3,attributeLabel4,attributeLabel5, attributeLabel6, attributeLabel7;
+    private TextView attribute1, attribute2, attribute3,attribute4,attribute5, attribute6, attribute7;
 
     private ImageView statisticsProfilepic, exerciseImg;
     SharedPreferences sharedPreferences;
@@ -56,11 +51,21 @@ public class StatisticsActivity extends Activity {
         attributeLabel3 = findViewById(R.id.attributeLabel3);
         attributeLabel4 = findViewById(R.id.attributeLabel4);
         attributeLabel5 = findViewById(R.id.attributeLabel5);
+        attributeLabel6 = findViewById(R.id.attributeLabel6);
+        attributeLabel7 = findViewById(R.id.attributeLabel7);
         attribute1 = findViewById(R.id.attribute1);
         attribute2 = findViewById(R.id.attribute2);
         attribute3 = findViewById(R.id.attribute3);
         attribute4 = findViewById(R.id.attribute4);
         attribute5 = findViewById(R.id.attribute5);
+        attribute6 = findViewById(R.id.attribute6);
+        attribute7 = findViewById(R.id.attribute7);
+        attributeLabel5.setVisibility(View.GONE);
+        attributeLabel6.setVisibility(View.GONE);
+        attributeLabel7.setVisibility(View.GONE);
+        attribute5.setVisibility(View.GONE);
+        attribute6.setVisibility(View.GONE);
+        attribute7.setVisibility(View.GONE);
         Intent intent = getIntent();
         String username = intent.getStringExtra("username");
         String password = intent.getStringExtra("password");
@@ -98,45 +103,104 @@ public class StatisticsActivity extends Activity {
             case "walking":
                 Walking walking = dbHandler.getWalking(user, date, time);
                 statisticsExerciseLabel.setText(walking.getExerciseType().toUpperCase() + " Statistics");
-                exerciseImg.setImageResource(R.drawable.walking);
+                exerciseImg.setImageResource(walking.getImgResource());
                 attributeLabel1.setText("Distance");
-                attribute1.setText((int) (walking.getDistance()*1000) + " km");
+                attribute1.setText(String.format("%.2f km", (walking.getDistance() * 0.001)));
                 attributeLabel2.setText("Duration");
                 attribute2.setText(walking.getDuration());
                 attributeLabel3.setText("Calories Burned");
-                attribute3.setText((int) (walking.getCaloriesBurned() * 1000) + " kcal");
+                attribute3.setText(String.format("%.2f kcal", (walking.getCaloriesBurned() * 0.001)));
                 attributeLabel4.setText("Speed");
+                attribute4.setText(String.format("%.2f km/hr", (walking.getSpeed() * 3.6)));
+                attributeLabel5.setText("Steps Count");
+                attribute5.setText(String.valueOf(walking.getStepCount()));
+                attributeLabel5.setVisibility(View.VISIBLE);
+                attribute5.setVisibility(View.VISIBLE);
                 break;
             case "hiking":
                 Hiking hiking = dbHandler.getHiking(user, date, time);
                 statisticsExerciseLabel.setText(hiking.getExerciseType().toUpperCase() + " Statistics");
-                exerciseImg.setImageResource(R.drawable.hiking);
-
+                exerciseImg.setImageResource(hiking.getImgResource());
+                attributeLabel1.setText("Distance");
+                attribute1.setText(String.format("%.2f km", (hiking.getDistance() * 0.001)));
+                attributeLabel2.setText("Duration");
+                attribute2.setText(hiking.getDuration());
+                attributeLabel3.setText("Calories Burned");
+                attribute3.setText(String.format("%.2f kcal", (hiking.getCaloriesBurned() * 0.001)));
+                attributeLabel4.setText("Speed");
+                attribute4.setText(String.format("%.2f km/hr", (hiking.getSpeed() * 3.6)));
+                attributeLabel6.setText("Elevation Gain");
+                attribute6.setText(String.format("%.2f m", hiking.getElevationGain()));
+                attributeLabel7.setText("Terrain");
+                attribute7.setText(hiking.getTerrainDifficultyRating());
+                attributeLabel6.setVisibility(View.VISIBLE);
+                attribute6.setVisibility(View.VISIBLE);
+                attributeLabel7.setVisibility(View.VISIBLE);
+                attribute7.setVisibility(View.VISIBLE);
                 break;
             case "biking":
                 Biking biking = dbHandler.getBiking(user, date, time);
                 statisticsExerciseLabel.setText(biking.getExerciseType().toUpperCase() + " Statistics");
-                exerciseImg.setImageResource(R.drawable.biking);
-
-
+                exerciseImg.setImageResource(biking.getImgResource());
+                attributeLabel1.setText("Distance");
+                attribute1.setText(String.format("%.2f km", (biking.getDistance() * 0.001)));
+                attributeLabel2.setText("Duration");
+                attribute2.setText(biking.getDuration());
+                attributeLabel3.setText("Calories Burned");
+                attribute3.setText(String.format("%.2f kcal", (biking.getCaloriesBurned() * 0.001)));
+                attributeLabel4.setText("Speed");
+                attribute4.setText(String.format("%.2f km/hr", (biking.getSpeed() * 3.6)));
+                attributeLabel6.setText("Elevation Gain");
+                attribute6.setText(String.format("%.2f m", biking.getElevationGain()));
+                attributeLabel7.setText("Biking Type");
+                attribute7.setText(biking.getType());
+                attributeLabel6.setVisibility(View.VISIBLE);
+                attribute6.setVisibility(View.VISIBLE);
+                attributeLabel7.setVisibility(View.VISIBLE);
+                attribute7.setVisibility(View.VISIBLE);
+                break;
             case "running":
                 Running running = dbHandler.getRunning(user, date, time);
                 statisticsExerciseLabel.setText(running.getExerciseType().toUpperCase() + " Statistics");
-                exerciseImg.setImageResource(R.drawable.running);
-
-
+                exerciseImg.setImageResource(running.getImgResource());
+                attributeLabel1.setText("Distance");
+                attribute1.setText(String.format("%.2f km", (running.getDistance() * 0.001)));
+                attributeLabel2.setText("Duration");
+                attribute2.setText(running.getDuration());
+                attributeLabel3.setText("Calories Burned");
+                attribute3.setText(String.format("%.2f kcal", (running.getCaloriesBurned() * 0.001)));
+                attributeLabel4.setText("Speed");
+                attribute4.setText(String.format("%.2f km/hr", (running.getSpeed() * 3.6)));
                 break;
             case "sprinting":
                 Sprinting sprinting = dbHandler.getSprinting(user, date, time);
                 statisticsExerciseLabel.setText(sprinting.getExerciseType().toUpperCase() + " Statistics");
                 exerciseImg.setImageResource(R.drawable.sprinting);
-
+                attributeLabel1.setText("Distance");
+                attribute1.setText(String.format("%.2f km", (sprinting.getDistance() * 0.001)));
+                attributeLabel2.setText("Duration");
+                attribute2.setText(sprinting.getDuration());
+                attributeLabel3.setText("Calories Burned");
+                attribute3.setText(String.format("%.2f kcal", (sprinting.getCaloriesBurned() * 0.001)));
+                attributeLabel4.setText("Speed");
+                attribute4.setText(String.format("%.2f km/hr", (sprinting.getSpeed() * 3.6)));
+                attributeLabel5.setText("Acceleration");
+                attribute5.setText(String.format("%.2f m/s", sprinting.getAcceleration()));
+                attributeLabel5.setVisibility(View.VISIBLE);
+                attribute5.setVisibility(View.VISIBLE);
                 break;
             case "swimming":
                 Swimming swimming = dbHandler.getSwimming(user, date, time);
                 statisticsExerciseLabel.setText(swimming.getExerciseType().toUpperCase() + " Statistics");
                 exerciseImg.setImageResource(R.drawable.swimming);
-
+                attributeLabel1.setText("Distance");
+                attribute1.setText(String.format("%.2f km", (swimming.getDistance() * 0.001)));
+                attributeLabel2.setText("Duration");
+                attribute2.setText(swimming.getDuration());
+                attributeLabel3.setText("Calories Burned");
+                attribute3.setText(String.format("%.2f kcal", (swimming.getCaloriesBurned() * 0.001)));
+                attributeLabel4.setText("Swimming Style");
+                attribute4.setText(swimming.getStyle());
             default:
                 break;
         }

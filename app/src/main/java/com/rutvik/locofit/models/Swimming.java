@@ -1,11 +1,14 @@
 package com.rutvik.locofit.models;
 
+import com.rutvik.locofit.R;
+
 import java.io.Serializable;
 
 public class Swimming extends Exercise implements Serializable {
     public String style;
 
     public Swimming() {
+        this.imgResource = R.drawable.swimming;
         this.exerciseType = "swimming";
     }
 
@@ -14,6 +17,7 @@ public class Swimming extends Exercise implements Serializable {
         this.style = style;
         this.MET = calcMET(style, duration);
         this.caloriesBurned = calcCaloriesBurned(weight, distance, this.MET);
+        this.imgResource = R.drawable.swimming;
         this.exerciseType = "swimming";
     }
 
@@ -38,6 +42,10 @@ public class Swimming extends Exercise implements Serializable {
                 break;
         }
         return MET * (durationHours + (durationMinutes * 0.0166667) + (durationSeconds*0.000277778));
+    }
+
+    public int getImgResource() {
+        return imgResource;
     }
 
     public String getStyle() {

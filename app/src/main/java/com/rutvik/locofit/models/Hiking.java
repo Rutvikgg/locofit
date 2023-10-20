@@ -1,5 +1,7 @@
 package com.rutvik.locofit.models;
 
+import com.rutvik.locofit.R;
+
 import java.io.Serializable;
 
 public class Hiking extends Exercise implements Serializable {
@@ -8,6 +10,7 @@ public class Hiking extends Exercise implements Serializable {
 
     public Hiking() {
         this.exerciseType = "hiking";
+        this.imgResource = R.drawable.hiking;
     }
 
     public Hiking(double distance, String duration, String onDate, int weight, String location, String onTime, String terrainDifficultyRating, double elevationGain) {
@@ -17,6 +20,7 @@ public class Hiking extends Exercise implements Serializable {
         this.MET = calcMET(terrainDifficultyRating, duration);
         this.caloriesBurned = calcCaloriesBurned(weight, distance, this.MET);
         this.speed = calcSpeed(distance, duration);
+        this.imgResource = R.drawable.hiking;
         this.exerciseType = "hiking";
     }
 
@@ -46,6 +50,10 @@ public class Hiking extends Exercise implements Serializable {
                 break;
         }
         return MET * (durationHours + (durationMinutes * 0.0166667) + (durationSeconds*0.000277778));
+    }
+
+    public int getImgResource() {
+        return imgResource;
     }
 
     public String getTerrainDifficultyRating() {

@@ -1,9 +1,12 @@
 package com.rutvik.locofit.models;
 
+import com.rutvik.locofit.R;
+
 public class Sprinting extends Exercise{
     public double acceleration;
 
     public Sprinting() {
+        this.imgResource = R.drawable.sprinting;
         this.exerciseType = "sprinting";
     }
 
@@ -14,6 +17,8 @@ public class Sprinting extends Exercise{
         this.caloriesBurned = calcCaloriesBurned(weight, distance, this.MET);
         this.acceleration = calcAcceleration(this.speed, duration);
         this.exerciseType = "sprinting";
+       this.imgResource = R.drawable.sprinting;
+
     }
 
     public double calcAcceleration(double speed, String duration) {
@@ -32,6 +37,10 @@ public class Sprinting extends Exercise{
 
     public double getAcceleration() {
         return acceleration;
+    }
+
+    public int getImgResource() {
+        return imgResource;
     }
 
     public void setAcceleration(double acceleration) {

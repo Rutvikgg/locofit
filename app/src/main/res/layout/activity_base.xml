@@ -21,14 +21,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageView
         android:id="@+id/logoutBtn"
-        android:layout_width="99dp"
-        android:layout_height="53dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Logout"
+        android:background="@drawable/field_background"
+        android:src="@drawable/logout_icon_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -214,6 +215,7 @@
             android:scaleX="1.5"
             android:scaleY="1.5"
             android:src="@drawable/biking" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -246,4 +248,17 @@
             android:scaleY="1.5"
             android:src="@drawable/hiking" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/historyBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/field_background"
+        android:scaleType="fitCenter"
+        android:src="@drawable/history_icon_foreground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
