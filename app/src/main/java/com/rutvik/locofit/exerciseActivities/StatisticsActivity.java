@@ -80,7 +80,7 @@ public class StatisticsActivity extends Activity {
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
             statisticsProfilepic.setImageBitmap(bitmap);
         } else {
-            statisticsProfilepic.setImageResource(R.drawable.logo_landscape_round_corner);
+            statisticsProfilepic.setImageResource(R.drawable.defaultprofilepic);
         }
 //        Log.d("General" , walking.getOnDate() + " " + walking.getDistance());
         SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd");

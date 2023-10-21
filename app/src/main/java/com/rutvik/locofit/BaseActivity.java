@@ -180,7 +180,7 @@ public class BaseActivity extends Activity {
             Bitmap bitmap = BitmapFactory.decodeFile(user.getProfilePicSrc());
             profilePicView.setImageBitmap(bitmap);
         } else {
-            profilePicView.setImageResource(R.drawable.logo_landscape_round_corner);
+            profilePicView.setImageResource(R.drawable.defaultprofilepic);
         }
     }
 
