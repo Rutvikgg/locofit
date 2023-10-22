@@ -15,6 +15,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -134,7 +136,7 @@ public class StartExerciseActivity extends Activity implements OnMapReadyCallbac
                     startExerciseButton.setText("Stop");
                     startLocationUpdates();
                     startChronometer();
-
+                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 } else {
                     startExerciseButton.setText("Start");
                     fusedLocationProviderClient.removeLocationUpdates(locationCallback);
@@ -210,6 +212,7 @@ public class StartExerciseActivity extends Activity implements OnMapReadyCallbac
                     }
                     totalDistance = 0.0;
                     totalElevationGain = 0.0;
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                     startActivity(statisticsIntent);
                 }
 
@@ -343,7 +346,7 @@ public class StartExerciseActivity extends Activity implements OnMapReadyCallbac
         pathPoints.add(userLocation);
         PolylineOptions polylineOptions = new PolylineOptions()
                 .addAll(pathPoints)
-                .width(20)
+                .width(17)
                 .color(ContextCompat.getColor(this, R.color.colorPolyline));
         myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
         Polyline polyline = myMap.addPolyline(polylineOptions);

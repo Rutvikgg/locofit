@@ -86,10 +86,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
-        android:layout_width="115dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="75dp"
+        android:background="@drawable/parameter_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
@@ -98,6 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/rubik"
+            android:paddingTop="5dp"
             android:text="TextView"
             android:textAlignment="center"
             android:textColor="@color/background_color_light_azul"
@@ -112,6 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:fontFamily="@font/rubik"
+            android:paddingBottom="5dp"
             android:text="TextView"
             android:textAlignment="center"
             android:textColor="@color/background_color_light_azul"
@@ -124,9 +127,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="115dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="50dp"
+        android:background="@drawable/parameter_background"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -134,6 +138,8 @@
             android:id="@+id/attributeLabel2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/rubik"
+            android:paddingTop="5dp"
             android:text="TextView"
             android:textAlignment="center"
             android:textColor="@color/background_color_light_azul"
@@ -148,6 +154,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:fontFamily="@font/rubik"
+            android:paddingBottom="5dp"
             android:text="TextView"
             android:textAlignment="center"
             android:textColor="@color/background_color_light_azul"
@@ -160,10 +167,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="115dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="32dp"
+        android:background="@drawable/parameter_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
@@ -172,6 +180,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/rubik"
+            android:paddingTop="5dp"
             android:text="Calories Burned"
             android:textAlignment="center"
             android:textColor="@color/background_color_light_azul"
@@ -186,6 +195,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:fontFamily="@font/rubik"
+            android:paddingBottom="5dp"
             android:text="TextView"
             android:textAlignment="center"
             android:textColor="@color/background_color_light_azul"
@@ -198,10 +208,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout4"
-        android:layout_width="115dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="50dp"
+        android:background="@drawable/parameter_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
@@ -210,6 +221,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/rubik"
+            android:paddingTop="5dp"
             android:text="TextView"
             android:textAlignment="center"
             android:textColor="@color/background_color_light_azul"
@@ -224,6 +236,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:fontFamily="@font/rubik"
+            android:paddingBottom="5dp"
             android:text="TextView"
             android:textAlignment="center"
             android:textColor="@color/background_color_light_azul"
@@ -236,9 +249,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout5"
-        android:layout_width="115dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:background="@drawable/parameter_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
@@ -248,6 +262,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/rubik"
+            android:paddingTop="5dp"
             android:text="TextView"
             android:textAlignment="center"
             android:textColor="@color/background_color_light_azul"
@@ -262,6 +277,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:fontFamily="@font/rubik"
+            android:paddingBottom="5dp"
             android:text="TextView"
             android:textAlignment="center"
             android:textColor="@color/background_color_light_azul"
@@ -273,10 +289,11 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="115dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="32dp"
+        android:background="@drawable/parameter_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
@@ -285,6 +302,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/rubik"
+            android:paddingTop="5dp"
             android:text="TextView"
             android:textColor="@color/background_color_light_azul"
             android:textSize="16sp"
@@ -298,6 +316,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:fontFamily="@font/rubik"
+            android:paddingBottom="5dp"
             android:text="TextView"
             android:textColor="@color/background_color_light_azul"
             android:textSize="16sp"
@@ -308,10 +327,11 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="115dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="50dp"
+        android:background="@drawable/parameter_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
@@ -320,6 +340,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/rubik"
+            android:paddingTop="5dp"
             android:text="TextView"
             android:textColor="@color/background_color_light_azul"
             android:textSize="16sp"
@@ -333,6 +354,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:fontFamily="@font/rubik"
+            android:paddingBottom="5dp"
             android:text="TextView"
             android:textAlignment="center"
             android:textColor="@color/background_color_light_azul"
@@ -342,5 +364,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/attributeLabel7" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/statisticsMapView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

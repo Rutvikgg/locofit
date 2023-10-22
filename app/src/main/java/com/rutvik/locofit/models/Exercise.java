@@ -116,7 +116,7 @@ public class Exercise implements Serializable {
     public double calcSpeed(double distance, String duration) {
         int durationHours = Integer.parseInt(duration.substring(0, 2));
         int durationMinutes = Integer.parseInt(duration.substring(3, 5));
-        int durationSeconds = Integer.parseInt(duration.substring(6, 8));
+        int durationSeconds = Integer.parseInt(duration.substring(6));
         return distance / ((durationHours*3600)+(durationMinutes*60)+durationSeconds);
     }
 

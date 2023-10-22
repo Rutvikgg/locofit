@@ -1,17 +1,34 @@
 package com.rutvik.locofit.exerciseActivities;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.icu.text.SimpleDateFormat;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.rutvik.locofit.R;
 import com.rutvik.locofit.models.Biking;
 import com.rutvik.locofit.models.Hiking;
@@ -22,15 +39,20 @@ import com.rutvik.locofit.models.User;
 import com.rutvik.locofit.models.Walking;
 import com.rutvik.locofit.util.DBHandler;
 
+import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 
-public class StatisticsActivity extends Activity {
+public class StatisticsActivity extends Activity implements OnMapReadyCallback {
     private TextView statisticsExerciseLabel, nameView, dateView;
     private TextView attributeLabel1, attributeLabel2, attributeLabel3,attributeLabel4,attributeLabel5, attributeLabel6, attributeLabel7;
     private TextView attribute1, attribute2, attribute3,attribute4,attribute5, attribute6, attribute7;
 
     private ImageView statisticsProfilepic, exerciseImg;
+    private MapView statisticsMapView;
+    private GoogleMap myMap;
+    private List<LatLng> pathPoints;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     User user;
@@ -41,6 +63,9 @@ public class StatisticsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
+        statisticsMapView = findViewById(R.id.statisticsMapView);
+        statisticsMapView.onCreate(savedInstanceState);
+        statisticsMapView.getMapAsync(this);
         statisticsExerciseLabel = findViewById(R.id.statisticsExerciseLabel);
         nameView = findViewById(R.id.nameView);
         dateView = findViewById(R.id.dateView);
@@ -98,6 +123,8 @@ public class StatisticsActivity extends Activity {
             throw new RuntimeException(e);
         }
         nameView.setText(user.getFirstName() + " " + user.getLastName());
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<LatLng>>() {}.getType();
 
         switch (type) {
             case "walking":
@@ -116,6 +143,7 @@ public class StatisticsActivity extends Activity {
                 attribute5.setText(String.valueOf(walking.getStepCount()));
                 attributeLabel5.setVisibility(View.VISIBLE);
                 attribute5.setVisibility(View.VISIBLE);
+                pathPoints = gson.fromJson(walking.getLocation(), listType);
                 break;
             case "hiking":
                 Hiking hiking = dbHandler.getHiking(user, date, time);
@@ -137,6 +165,7 @@ public class StatisticsActivity extends Activity {
                 attribute6.setVisibility(View.VISIBLE);
                 attributeLabel7.setVisibility(View.VISIBLE);
                 attribute7.setVisibility(View.VISIBLE);
+                pathPoints = gson.fromJson(hiking.getLocation(), listType);
                 break;
             case "biking":
                 Biking biking = dbHandler.getBiking(user, date, time);
@@ -158,6 +187,7 @@ public class StatisticsActivity extends Activity {
                 attribute6.setVisibility(View.VISIBLE);
                 attributeLabel7.setVisibility(View.VISIBLE);
                 attribute7.setVisibility(View.VISIBLE);
+                pathPoints = gson.fromJson(biking.getLocation(), listType);
                 break;
             case "running":
                 Running running = dbHandler.getRunning(user, date, time);
@@ -171,6 +201,7 @@ public class StatisticsActivity extends Activity {
                 attribute3.setText(String.format("%.2f kcal", (running.getCaloriesBurned() * 0.001)));
                 attributeLabel4.setText("Speed");
                 attribute4.setText(String.format("%.2f km/hr", (running.getSpeed() * 3.6)));
+                pathPoints = gson.fromJson(running.getLocation(), listType);
                 break;
             case "sprinting":
                 Sprinting sprinting = dbHandler.getSprinting(user, date, time);
@@ -188,6 +219,7 @@ public class StatisticsActivity extends Activity {
                 attribute5.setText(String.format("%.2f m/s", sprinting.getAcceleration()));
                 attributeLabel5.setVisibility(View.VISIBLE);
                 attribute5.setVisibility(View.VISIBLE);
+                pathPoints = gson.fromJson(sprinting.getLocation(), listType);
                 break;
             case "swimming":
                 Swimming swimming = dbHandler.getSwimming(user, date, time);
@@ -201,43 +233,51 @@ public class StatisticsActivity extends Activity {
                 attribute3.setText(String.format("%.2f kcal", (swimming.getCaloriesBurned() * 0.001)));
                 attributeLabel4.setText("Swimming Style");
                 attribute4.setText(swimming.getStyle());
+                pathPoints = gson.fromJson(swimming.getLocation(), listType);
             default:
                 break;
         }
-//        int year = Integer.parseInt(walking.getOnDate().substring(0, 4));
-//        String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-//        int month = Integer.parseInt(walking.getOnDate().substring(6,8));
-//        int day = Integer.parseInt(walking.getOnDate().substring(9));
-//        int hour = Integer.parseInt(walking.getOnTime().substring(0,2));
-//        int minute = Integer.parseInt(walking.getOnTime().substring(3,5));
-//        dateView.setText(day + " " + months[month-1] + " " + year + "   " + (hour>12 ? (hour-12 + ":" + minute) : (hour + ":" + minute)));
-//        switch (exercise.getExerciseType()) {
-//            case "walking":
-//                statisticsExerciseLabel.setText(exercise.getExerciseType().toUpperCase() + " Statistics");
-//                exerciseImg.setImageResource(R.drawable.walking);
-//                break;
-//            case "running":
-//                statisticsExerciseLabel.setText(exercise.getExerciseType().toUpperCase() + " Statistics");
-//                exerciseImg.setImageResource(R.drawable.running);
-//                break;
-//            case "sprinting":
-//                statisticsExerciseLabel.setText(exercise.getExerciseType().toUpperCase() + " Statistics");
-//                exerciseImg.setImageResource(R.drawable.sprinting);
-//                break;
-//            case "swimming":
-//                statisticsExerciseLabel.setText(exercise.getExerciseType().toUpperCase() + " Statistics");
-//                exerciseImg.setImageResource(R.drawable.swimming);
-//                break;
-//            case "biking":
-//                statisticsExerciseLabel.setText(exercise.getExerciseType().toUpperCase() + " Statistics");
-//                exerciseImg.setImageResource(R.drawable.biking);
-//                break;
-//            case "hiking":
-//                statisticsExerciseLabel.setText(exercise.getExerciseType().toUpperCase() + " Statistics");
-//                exerciseImg.setImageResource(R.drawable.hiking);
-//                break;
-//            default:
-//                break;
-//        }
+    }
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        myMap = googleMap;
+        myMap.getUiSettings().setScrollGesturesEnabled(true);
+        if (!pathPoints.isEmpty()) {
+            PolylineOptions polylineOptions = new PolylineOptions()
+                    .addAll(pathPoints)
+                    .width(17)
+                    .color(ContextCompat.getColor(this, R.color.colorPolyline));
+
+            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pathPoints.get(0), 15));
+            Polyline polyline = myMap.addPolyline(polylineOptions);
+        }else {
+            LatLng placehoderLocation = new LatLng(55.702888, 13.194710);
+            myMap.addMarker(new MarkerOptions().position(placehoderLocation).title("No location available")).showInfoWindow();
+            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(placehoderLocation, 15));
+        }
+
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        statisticsMapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        statisticsMapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        statisticsMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        statisticsMapView.onLowMemory();
     }
 }
