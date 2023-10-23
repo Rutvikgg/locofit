@@ -96,8 +96,15 @@ public class RegisterFormActivity extends Activity {
             public void onClick(View view) {
                 String firstName = formFirstNameField.getText().toString().trim();
                 String lastName = formLastNameField.getText().toString().trim();
-                int height = Integer.parseInt(formHeightField.getText().toString().trim());
-                int weight = Integer.parseInt(formWeightField.getText().toString().trim());
+                int height;
+                int weight;
+                try {
+                    height = Integer.parseInt(formHeightField.getText().toString().trim());
+                    weight = Integer.parseInt(formWeightField.getText().toString().trim());}
+                catch (Exception e) {
+                    height = 0;
+                    weight = 0;
+                }
                 String email = formEmailField.getText().toString().trim();
                 String DOB = dob[0] + "-" + dob[1] + "-" + dob[2];
                 String gender = selectedGender[0];
