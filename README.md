@@ -39,7 +39,7 @@ New users can access the app by establishing their profile through a comprehensi
 
 https://github.com/Rutvikgg/locofit/assets/133527690/b7753a00-91e1-4ff2-9a26-502e421c008b
 
-## Bugs Checking Phase
+## Bugs Fixing Phase
 
 Smoother, faster, better! We've tackled those bugs and our app is now ready to shine.
 
