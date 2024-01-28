@@ -63,11 +63,10 @@ Monitor your progress with ease through intuitive charts and graphs. Witness you
 
 
 
-GitHub Link : https://github.com/kamalagrahari03/LoCoFit
-
 
 
 Embark on a transformative fitness experience with LoCoFit ! 🚀 Download now and embark on your journey to a healthier, fitter you. 💼 #FitnessRevolution #LoCoFit #HealthAndWellness #FitLife #TechInFitness 🏆
+
 ## Features list
 # LoCoFit - Empowering Your Fitness Journey with Advanced Features! 🚀💪
 
